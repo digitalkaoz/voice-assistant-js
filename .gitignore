@@ -1,0 +1,7 @@
+/node_modules
+/.idea
+/src/**/*.js
+/src/**/*.js.map
+/typings.js*
+/typings.d.ts
+/dist/

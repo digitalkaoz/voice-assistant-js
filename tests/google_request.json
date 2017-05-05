@@ -1,0 +1,92 @@
+{
+  "originalRequest": {
+    "source": "google",
+    "data": {
+      "surface": {
+        "capabilities": [
+          {
+            "name": "actions.capability.AUDIO_OUTPUT"
+          }
+        ]
+      },
+      "inputs": [
+        {
+          "arguments": [
+            {
+              "raw_text": "where are my packages",
+              "text_value": "where are my packages",
+              "name": "text"
+            }
+          ],
+          "intent": "assistant.intent.action.TEXT",
+          "raw_inputs": [
+            {
+              "query": "where are my packages",
+              "input_type": 2,
+              "annotation_sets": []
+            }
+          ]
+        }
+      ],
+      "user": {
+        "access_token": "fac847220fd2c63ef18f90c153c08d856196ebc7",
+        "user_id": "Z3FuGiTi8PWuBJn6vGp/ENo6HKYTsOgqpjLoxvX4gBI=",
+        "permissions": []
+      },
+      "device": {
+        "locale": "en-US"
+      },
+      "is_in_sandbox": true,
+      "conversation": {
+        "conversation_token": "[]",
+        "conversation_id": "1493847649070",
+        "type": 2
+      }
+    }
+  },
+  "id": "9210c816-e5e7-4d26-85ed-38b3306aae4e",
+  "timestamp": "2017-05-03T21:45:22.833Z",
+  "lang": "en",
+  "result": {
+    "source": "agent",
+    "resolvedQuery": "where are my packages",
+    "speech": "",
+    "action": "welcome",
+    "actionIncomplete": false,
+    "parameters": {
+      "unit-information": "packages",
+      "unit-information-name" : "Chino"
+    },
+    "contexts": [
+      {
+        "name": "actions_capability_audio_output",
+        "parameters": {
+          "unit-information.original": "packages",
+          "unit-information": "packages"
+        },
+        "lifespan": 0
+      }
+    ],
+    "metadata": {
+      "intentId": "a9bfb6cc-527c-4007-b159-870fb326f80a",
+      "webhookUsed": "true",
+      "webhookForSlotFillingUsed": "false",
+      "intentName": "order.packages"
+    },
+    "fulfillment": {
+      "speech": "Here are your Packages",
+      "messages": [
+        {
+          "type": 0,
+          "speech": "Here are your Packages"
+        }
+      ]
+    },
+    "score": 1
+  },
+  "status": {
+    "code": 200,
+    "errorType": "success"
+  },
+  "sessionId": "1493847649070"
+}
