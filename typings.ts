@@ -19,3 +19,7 @@ export declare interface Event {
   user(): string;
   conversation(): string;
 }
+
+export declare interface Response {
+  build(data: any): Object
+}

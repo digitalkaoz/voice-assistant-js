@@ -10,7 +10,8 @@
     "moduleResolution": "node"
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "example"
   ],
   "typeRoots": [
     "node_modules/@types"

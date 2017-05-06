@@ -1,19 +1,21 @@
 {
+  "name": "voice-assistent-js",
+
   "devDependencies": {
     "@types/jest": "^19.2.3",
     "@types/node": "^7.0.18",
     "jest": "^19.0.2",
-    "reflect-metadata": "^0.1.10",
     "standard": "^10.0.2",
     "ts-node": "^3.0.4",
     "typescript": "^2.3.2",
     "typescript-standard": "^0.3.30"
   },
   "dependencies": {
-    "di-typescript": "^1.1.3"
+    "di-typescript": "^1.1.3",
+    "reflect-metadata": "^0.1.10"
   },
   "scripts": {
-    "dev": "ts-node tests/test.ts",
+    "test": "ts-node tests/test.ts",
     "cs": "standard --pretty",
     "build": "npm run cs && tsc"
   }

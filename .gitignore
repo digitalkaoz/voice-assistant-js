@@ -5,3 +5,6 @@
 /typings.js*
 /typings.d.ts
 /dist/
+/example/google/node_modules/
+/example/alexa/package.zip
+/example/alexa/node_modules/

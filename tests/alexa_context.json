@@ -1,0 +1,11 @@
+{
+  "callbackWaitsForEmptyEventLoop": true,
+  "logGroupName": "/aws/lambda/sonos",
+  "logStreamName": "2017/05/06/[$LATEST]deaf88b89cfa40b895a87daafe444b09",
+  "functionName": "sonos",
+  "memoryLimitInMB": "128",
+  "functionVersion": "$LATEST",
+  "invokeid": "f91b6d52-3286-11e7-9e67-6d9766ccf475",
+  "awsRequestId": "f91b6d52-3286-11e7-9e67-6d9766ccf475",
+  "invokedFunctionArn": "arn:aws:lambda:eu-west-1:455201159890:function:sonos"
+}

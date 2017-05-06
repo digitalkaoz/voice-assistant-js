@@ -4,7 +4,7 @@ import { Api } from '../../typings';
 @Inject
 export class DefaultApi implements Api {
 
-  public welcome(event: Event): Promise<string> {
+  public default(event: Event): Promise<string> {
     return new Promise((resolve) => resolve('welcome'));
   }
 }

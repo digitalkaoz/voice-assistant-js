@@ -51,7 +51,7 @@
     "source": "agent",
     "resolvedQuery": "where are my packages",
     "speech": "",
-    "action": "welcome",
+    "action": "default",
     "actionIncomplete": false,
     "parameters": {
       "unit-information": "packages",

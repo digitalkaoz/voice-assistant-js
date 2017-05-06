@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": true,
+    "sessionId": "SessionId.a275bba1-8e45-432c-af44-279f01f11cba",
+    "application": {
+      "applicationId": "amzn1.ask.skill.b37c9eff-31ac-4a89-8c53-fe42a60384d6"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.AHAJRONPTXVYDLYWFBPIPCVTO45BIW33CGUL6M6PM6CRVZR745A73CYH3DEXYJUQ4YLF57IJG3OZRWIZ7ECBQAQVXXKOVBNFNCOH7YVSL3EELIKK4RKNKWWHGMJAKAM33Q4HJPBFYGORU5LVMUIMDLBDTG47DEAYQH6HS7XQBE5SD7HQ7UIRLSE2RNY47BQNQFRWELZRARF5RNI"
+    }
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.f21d379b-8983-4345-9769-21b2e2efbbea",
+    "timestamp": "2017-05-06T18:08:14Z",
+    "locale": "de-DE",
+    "intent": {
+      "name": "PauseIntent",
+      "slots": {
+        "Room": {
+          "name": "Room",
+          "value": "Gästezimmer"
+        }
+      }
+    }
+  }
+}
