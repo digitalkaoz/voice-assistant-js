@@ -4,10 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "reflect-metadata": "^0.1.10"
+    "actions-on-google": "^1.0.9",
+    "reflect-metadata": "^0.1.10",
+    "voice-assistant-js": "file:/Users/caziel/workspace/own/voice-assistent-js"
   },
   "scripts": {
-    "deploy": "npm run package && npm run upload",
+    "deploy": "rm -rf node_modules/* && yarn install --force --production && npm run package && npm run upload",
     "package": "zip -r package.zip .",
     "upload": "aws lambda update-function-code --function-name sonos --zip-file fileb://package.zip"
   }

@@ -1,11 +1,11 @@
 class Pause {
-  pauseIntent(event) {
-    return new Promise(function (resolve) {
-      resolve(event.tell('foo'))
-    })
+  public pauseIntent(event) {
+    return new Promise((resolve) => {
+      resolve(event.tell("foo"));
+    });
   }
 }
 
 export default {
-  'PauseIntent': Pause
-}
+  PauseIntent: Pause,
+};

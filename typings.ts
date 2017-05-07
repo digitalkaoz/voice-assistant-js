@@ -1,25 +1,23 @@
-///<reference path="node_modules/@types/jest/index.d.ts"/>
+import "@types/jest/index";
 
-export declare interface ApiMapping {
-  [key: string]: Api
+export declare interface IApiMapping {
+  [key: string]: IApi;
 }
 
 export declare function require(moduleName: string): any;
 
-export declare interface Api {
+export declare interface IApi {}
 
+export declare interface IContainer {
+  get: (key: any) => any;
 }
 
-export declare interface Container {
-  get: Function;
-}
-
-export declare interface Event {
+export declare interface IEvent {
   tell(text: string);
   intent(): string;
   ask(text: string);
 }
 
-export declare interface Response {
-  build(data: any): Object
+export declare interface IHandler {
+  // createEvent(event: any, context: any, callback: () => any): IEvent;
 }

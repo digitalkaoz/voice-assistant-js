@@ -1,15 +1,16 @@
-import { GoogleActionHandler } from '../../src/Handler/GoogleActionHandler';
+import { GoogleActionHandler } from "../../src/handler/GoogleActionHandler";
 
-import mapping from '../fixtures/mapping';
-const event = require('../fixtures/google-action/event.json');
+import mapping from "../fixtures/mapping";
 
-describe('GoogleActionHandler', () => {
+describe("GoogleActionHandler", () => {
 
-  it('calls the given Api', (done) => {
+  const event = require("../fixtures/google-action/event.json");
+
+  it("calls the given IApi", (done) => {
     new GoogleActionHandler(mapping).handle(event, {}, (data) => {
       expect(JSON.parse(data.toString())).toEqual({
         expect_user_response: false,
-        final_response: { speech_response: { text_to_speech: 'default' } }
+        final_response: { speech_response: { text_to_speech: "default" } },
       });
       done();
     }).catch(done.fail);

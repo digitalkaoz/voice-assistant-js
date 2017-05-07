@@ -1,19 +1,19 @@
-import { Event } from '../../typings';
+import { IEvent } from "../../typings";
 
-import { ActionsSdkAssistant } from 'actions-on-google/actions-sdk-assistant.js';
+import { ActionsSdkAssistant } from "actions-on-google/actions-sdk-assistant.js";
 
-export class GoogleActionEvent implements Event {
+export class GoogleActionEvent implements IEvent {
   constructor(private assistant: ActionsSdkAssistant) { }
 
-  tell(text) {
+  public tell(text) {
     return this.assistant.tell(text);
   }
 
-  intent(): string {
+  public intent(): string {
     return this.assistant.getIntent();
   }
 
-  ask(text) {
+  public ask(text) {
     return this.assistant.ask(text);
   }
 }
