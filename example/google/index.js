@@ -1,9 +1,9 @@
 const voiceAssistent = require('./node_modules/voice-assistent-js/src/Handler').Handler
 
 class Pause {
-  pauseIntent () {
+  pauseIntent (event) {
     return new Promise(function (resolve) {
-      resolve('test')
+      resolve(event.tell('foo'))
     })
   }
 }
@@ -12,7 +12,9 @@ const mapping = {
   'PauseIntent': Pause
 }
 
-exports.handler = function (event, context, callback) {
-  console.log(JSON.stringify(event), JSON.stringify(context));
+const handler = function (event, context, callback) {
+  console.log(JSON.stringify(event), JSON.stringify(context))
   voiceAssistent.googleHome(mapping, event, context, callback)
 }
+
+exports.handler = handler

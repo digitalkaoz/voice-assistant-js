@@ -1,34 +1,20 @@
 import { Event } from '../../typings';
 
+import { LambdaHandler } from 'alexa-sdk/lib/alexa.js';
+
 export class AlexaEvent implements Event {
-  constructor(private event: any, private context: any) {
+
+  constructor(private handler: LambdaHandler, private callback: Function) { }
+
+  tell(text: string) {
+    return this.handler.emit(':tell', text);
   }
 
-  locale() {
-    return this.event.request.locale;
+  intent(): string {
+    return this.handler._event.request.intent.name
   }
 
-  intent() {
-    return this.event.request.intent.name;
-  }
-
-  parameters() {
-    return this.event.request.intent.slots;
-  }
-
-  contexts() {
-    return this.context;
-  }
-
-  token() {
-    return this.event.session.user.userId;
-  }
-
-  user() {
-    return this.event.session.user;
-  }
-
-  conversation() {
-    return this.event; // TODO
+  ask(text: string) {
+    return this.handler.emit(':listen', text);
   }
 }

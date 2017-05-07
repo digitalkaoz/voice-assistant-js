@@ -6,8 +6,12 @@
     "experimentalDecorators": true,
     "outDir": "dist",
     "inlineSourceMap": true,
-    "removeComments": true,
-    "moduleResolution": "node"
+    "removeComments": false,
+    "moduleResolution": "node",
+    "types": [
+      "node",
+      "reflect-metadata"
+    ]
   },
   "exclude": [
     "node_modules",

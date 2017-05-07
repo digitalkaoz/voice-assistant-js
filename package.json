@@ -1,11 +1,14 @@
 {
   "name": "voice-assistent-js",
-
   "devDependencies": {
     "@types/jest": "^19.2.3",
     "@types/node": "^7.0.18",
-    "jest": "^19.0.2",
+    "actions-on-google": "^1.0.9",
+    "alexa-sdk": "^1.0.9",
+    "express": "^4.15.2",
+    "jest": "^20.0.0",
     "standard": "^10.0.2",
+    "ts-jest": "^20.0.0",
     "ts-node": "^3.0.4",
     "typescript": "^2.3.2",
     "typescript-standard": "^0.3.30"
@@ -15,8 +18,25 @@
     "reflect-metadata": "^0.1.10"
   },
   "scripts": {
-    "test": "ts-node tests/test.ts",
+    "test": "jest",
     "cs": "standard --pretty",
-    "build": "npm run cs && tsc"
+    "coverage" : "jest --coverage",
+    "build": "npm run cs && tsc",
+    "int": "ts-node tests/integration/apiai.ts && ts-node tests/integration/google-action.ts && ts-node tests/integration/alexa.ts"
+  },
+  "jest": {
+    "moduleFileExtensions": ["js","ts"],
+    "cache": false,
+    "verbose": true,
+    "transform": {
+      "\\.(ts)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "collectCoverage" : false,
+    "coverageDirectory" : "coverage",
+
+    "mapCoverage": true,
+    "testMatch": [
+      "**/tests/**/*Spec.ts"
+    ]
   }
 }

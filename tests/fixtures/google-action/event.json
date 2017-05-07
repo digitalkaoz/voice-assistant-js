@@ -1,0 +1,50 @@
+{
+  "user": {
+    "user_id": "USERID",
+    "profile": {
+      "given_name": "John",
+      "family_name": "Doe",
+      "display_name": "John Doe"
+    },
+    "access_token": "TOKEN"
+  },
+  "device": {
+    "location": {
+      "coordinates": {
+        "latitude": 123.456,
+        "longitude": -123.456
+      },
+      "formatted_address": "1234 Random Road, Anytown, CA 12345, United States",
+      "city": "Anytown",
+      "zip_code": "12345"
+    }
+  },
+  "conversation": {
+    "conversation_id": "...",
+    "type": "ACTIVE",
+    "conversation_token": "..."
+  },
+  "inputs": [
+    {
+      "intent": "default",
+      "raw_inputs": [
+        {
+          "query": "some text"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "destination",
+          "raw_text": "SFO",
+          "location_value": {
+            "latlng": {
+              "latitude": 37.620565,
+              "longitude": -122.384964
+            },
+            "formatted_address": "1000 Broadway, San Francisco, CA 95133"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,10 @@
+///<reference path="node_modules/@types/jest/index.d.ts"/>
+
 export declare interface ApiMapping {
   [key: string]: Api
 }
+
+export declare function require(moduleName: string): any;
 
 export declare interface Api {
 
@@ -11,13 +15,9 @@ export declare interface Container {
 }
 
 export declare interface Event {
-  // constructor(rawEvent: Object);
+  tell(text: string);
   intent(): string;
-  parameters(): string;
-  contexts(): string;
-  token(): string;
-  user(): string;
-  conversation(): string;
+  ask(text: string);
 }
 
 export declare interface Response {
