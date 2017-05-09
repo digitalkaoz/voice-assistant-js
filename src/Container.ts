@@ -1,32 +1,39 @@
-import { Injector, Module } from "di-typescript";
-import { IApiMapping, IContainer as IContainer } from "../typings";
-import { DefaultApi } from "./api/DefaultApi";
+import {Container as Injector, Service, Token} from 'typedi'
+import {IApiMapping, IContainer as IContainer, IHandler} from '../typings'
+import {DefaultApi} from './api/DefaultApi'
 
+export const Handler = new Token<IHandler>('handler')
+
+@Service()
 export class Container implements IContainer {
 
-  private injector: Injector;
+  constructor (mapping: IApiMapping) {
+    this.injectApis(mapping)
+  }
 
-  constructor(mapping: IApiMapping) {
-
-    // let apiClasses : Array<Module> = [];
-    const apiClasses: any[] = [{
-      provide: "default",
-      useClass: DefaultApi,
-    }];
+  injectApis (mapping: IApiMapping): void {
+    Injector.registerService({id: 'default', type: DefaultApi})
 
     for (const key in mapping) {
       if (mapping.hasOwnProperty(key)) {
-        apiClasses.push({
-          provide: key,
-          useClass: mapping[key],
-        });
+        Injector.registerService({
+          id: key,
+          type: mapping[key]
+        })
+      }
+    }
+  }
+
+  public get<T> (key: any): T {
+    // handle dynamic requires
+    switch (key) {
+      case 'lambda' : {
+        require('./handler/AutoDetectHandler')
+        require('./function/LamdaFunction')
+        break
       }
     }
 
-    this.injector = new Injector(apiClasses);
-  }
-
-  public get(key: any): any {
-    return this.injector.get(key);
+    return Injector.get<T>(key)
   }
 }

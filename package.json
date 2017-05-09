@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "main": "dist/src/handler/AutoDetectHandler.js",
   "devDependencies": {
+    "@types/alexa-sdk": "^1.0.4",
+    "@types/express": "^4.0.35",
     "@types/jest": "^19.2.3",
     "@types/node": "^7.0.18",
     "actions-on-google": "^1.0.9",
@@ -13,23 +15,26 @@
     "ts-jest": "^20.0.0",
     "ts-node": "^3.0.4",
     "tslint": "^5.2.0",
+    "tslint-config-standard": "^5.0.2",
     "typescript": "^2.3.2",
     "typescript-standard": "^0.3.30"
   },
   "dependencies": {
-    "di-typescript": "^1.1.3",
-    "reflect-metadata": "^0.1.10"
+    "reflect-metadata": "^0.1.10",
+    "typedi": "^0.5.1"
   },
   "peerDependencies": {
-    "actions-on-google": "^1.0.9",
-    "alexa-sdk": "^1.0.9"
+    "actions-on-google": "if you want to use google/api-ai requests",
+    "alexa-sdk": "if you want to use alexa requests",
+    "express": "if you want to use google/api-ai requests"
   },
   "scripts": {
-    "cs": "standard --pretty src/**/*.ts",
+    "cs": "standard --pretty src/**/*.ts tests/**/*.ts",
     "test": "jest",
-    "lint": "tslint --fix -p .",
+    "lint": "tslint --type-check --fix --project tsconfig.json",
+    "int" : "ts-node tests/test.ts",
     "coverage": "jest --coverage",
-    "build": "NODE_ENV=production rm -rf dist/* && tsc && rm -rf dist/node_modules/aws-sdk"
+    "build": "NODE_ENV=production rm -rf dist/* && npm run cs && tsc"
   },
   "jest": {
     "moduleFileExtensions": [

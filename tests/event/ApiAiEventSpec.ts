@@ -1,41 +1,40 @@
-import { ApiAiEvent } from "../../src/event/ApiAiEvent";
+import { ApiAiEvent } from '../../src/event/ApiAiEvent'
 
 // TODO do we really want to mock?
-jest.mock("actions-on-google/api-ai-assistant.js");
+jest.mock('actions-on-google/api-ai-assistant.js')
+const apiAiAssistant = require('actions-on-google/api-ai-assistant.js')
 
-describe("ApiAiEvent", () => {
+describe('ApiAiEvent', () => {
 
-  let event: ApiAiEvent;
-  let assistant;
+  let event: ApiAiEvent
+  let assistant
 
   beforeEach(() => {
-    const apiAiAssistant = require("actions-on-google/api-ai-assistant.js");
+    assistant = new apiAiAssistant()
+    assistant.getIntent = jest.fn()
 
-    assistant = new apiAiAssistant();
-    assistant.getIntent = jest.fn();
+    event = new ApiAiEvent(assistant)
+  })
 
-    event = new ApiAiEvent(assistant);
-  });
+  it('can tell', () => {
+    const spy = jest.spyOn(assistant, 'tell')
 
-  it("can tell", () => {
-    const spy = jest.spyOn(assistant, "tell");
+    event.tell('foo')
 
-    event.tell("foo");
+    expect(spy).toHaveBeenCalledWith('foo')
+  })
 
-    expect(spy).toHaveBeenCalledWith("foo");
-  });
+  it('can ask', () => {
+    const spy = jest.spyOn(assistant, 'ask')
 
-  it("can ask", () => {
-    const spy = jest.spyOn(assistant, "ask");
+    event.ask('foo')
 
-    event.ask("foo");
+    expect(spy).toHaveBeenCalledWith('foo')
+  })
 
-    expect(spy).toHaveBeenCalledWith("foo");
-  });
+  it('returns the intent', () => {
+    assistant.getIntent.mockReturnValue('foo')
 
-  it("returns the intent", () => {
-    assistant.getIntent.mockReturnValue("foo");
-
-    expect(event.intent()).toBe("foo");
-  });
-});
+    expect(event.intent()).toBe('foo')
+  })
+})

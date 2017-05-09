@@ -1,23 +1,28 @@
-import "@types/jest/index";
-
 export declare interface IApiMapping {
-  [key: string]: IApi;
+  [key: string]: Function
 }
 
-export declare function require(moduleName: string): any;
+export declare function require(moduleName: string): any
 
 export declare interface IApi {}
 
 export declare interface IContainer {
-  get: (key: any) => any;
+  get: (key: any) => any
 }
 
 export declare interface IEvent {
-  tell(text: string);
-  intent(): string;
-  ask(text: string);
+  tell(text: string)
+  intent(): string
+  ask(text: string)
 }
 
 export declare interface IHandler {
   // createEvent(event: any, context: any, callback: () => any): IEvent;
+  handle(event: any, context: any, callback: () => any)
+}
+
+// TODO add specific interfaces for different event and context objects
+
+export declare interface IFunction {
+  invoke(event: any, context: any, callback: (data: any) => any)
 }

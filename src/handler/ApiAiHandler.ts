@@ -1,29 +1,19 @@
-import { IEvent } from "../../typings";
-import { ApiAiEvent } from "../event/ApiAiEvent";
-import { Handler } from "./Handler";
+import { IEvent } from '../../typings'
+import { ApiAiEvent } from '../event/ApiAiEvent'
+import { GoogleHandler } from './GoogleHandler'
+import { ApiAiAssistant } from 'actions-on-google'
+import { Service } from 'typedi'
 
-export class ApiAiHandler extends Handler {
+@Service()
+export class ApiAiHandler extends GoogleHandler {
 
-  public static event(event, callback): IEvent {
-    const apiAiAssistent = require("actions-on-google").ApiAiAssistant;
-    const req = require("express/lib/request");
-    const res = require("express/lib/response");
-    const app = require("express");
+  public static event(event, context, callback): IEvent {
+    const args = this.createAssistantArguments(event, callback)
 
-    req.body = event;
-
-    // some ugly fixes as we are not in a real express app
-    req.res = res;
-    req.headers = {};
-    res.app = app();
-    res.setHeader = () => null;
-    res.end = callback;
-    res.req = req;
-
-    return new ApiAiEvent(new apiAiAssistent({ request: req, response: res }));
+    return new ApiAiEvent(new ApiAiAssistant(args))
   }
 
   protected createEvent(event, context, callback): IEvent {
-    return ApiAiHandler.event(event, callback);
+    return ApiAiHandler.event(event, context, callback)
   }
 }

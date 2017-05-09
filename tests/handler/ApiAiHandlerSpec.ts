@@ -1,20 +1,20 @@
-import { ApiAiHandler } from "../../src/handler/ApiAiHandler";
+import { Container } from '../../src/Container'
+import { ApiAiHandler } from '../../src/handler/ApiAiHandler'
 
-import mapping from "../fixtures/mapping";
+import mapping from '../fixtures/mapping'
 
-describe("ApiAiHandler", () => {
+describe('ApiAiHandler', () => {
 
-  const event = require("../fixtures/apiai/event.json");
+  const event = require('../fixtures/apiai/event.json')
 
-  it("calls the given IApi", (done) => {
+  it('calls the given Api', async () => {
+    const callback = jest.fn()
+    await new ApiAiHandler(new Container(mapping)).handle(event, {}, callback)
 
-    new ApiAiHandler(mapping).handle(event, {}, (data) => {
-      expect(JSON.parse(data.toString())).toEqual({
-        contextOut: [],
-        data: { google: { expect_user_response: false, is_ssml: false, no_input_prompts: [] } },
-        speech: "default",
-      });
-      done();
-    }).catch(done.fail);
-  });
-});
+    expect(callback).toHaveBeenCalledWith(undefined, {
+      contextOut: [],
+      data: { google: { expect_user_response: false, is_ssml: false, no_input_prompts: [] } },
+      speech: 'default'
+    })
+  })
+})

@@ -1,9 +1,12 @@
 {
     "defaultSeverity": "warning",
     "extends": [
-        "tslint:recommended"
+        //"tslint:recommended",
+        "tslint-config-standard"
     ],
     "jsRules": {},
-    "rules": {},
+    "rules": {
+        "space-before-function-paren": false
+    },
     "rulesDirectory": []
 }

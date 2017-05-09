@@ -6,7 +6,10 @@
     "experimentalDecorators": true,
     "outDir": "dist",
     "inlineSourceMap": true,
-    "removeComments": false,
+    "declaration": true,
+    "lib": ["es6"],
+    "removeComments": true,
+    "preserveConstEnums": true,
     "moduleResolution": "node",
     "types": [
       "node",
@@ -14,15 +17,14 @@
     ]
   },
   "exclude": [
-    "example",
-    "node_modules/typescript",
-    "node_modules/reflect-metadata/test",
-    "node_modules/aws-sdk"
   ],
   "typeRoots": [
     "node_modules/@types"
   ],
   "include": [
-    "**/*.ts"
+    "src/**/*.ts",
+    "tests/**/*.ts",
+    "node_modules/typedi/**/*.ts",
+    "node_modules/@types/jest/index.d.ts"
   ]
 }
