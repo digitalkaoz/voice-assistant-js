@@ -1,8 +1,6 @@
 import {Container as Injector, Service, Token} from 'typedi'
-import {IApiMapping, IContainer as IContainer, IHandler} from '../typings'
+import {IApiMapping, IContainer as IContainer, IFunction, IHandler} from '../typings'
 import {DefaultApi} from './api/DefaultApi'
-
-export const Handler = new Token<IHandler>('handler')
 
 @Service()
 export class Container implements IContainer {
@@ -25,15 +23,17 @@ export class Container implements IContainer {
   }
 
   public get<T> (key: any): T {
-    // handle dynamic requires
-    switch (key) {
-      case 'lambda' : {
-        require('./handler/AutoDetectHandler')
-        require('./function/LamdaFunction')
-        break
-      }
-    }
-
     return Injector.get<T>(key)
   }
+}
+
+export const Handler = new Token<IHandler>('handler')
+
+export function lambda (mapping: IApiMapping) {
+  require('./handler/AutoDetectHandler')
+  require('./function/LamdaFunction')
+
+  const lambda = new Container(mapping).get<IFunction>('lambda')
+
+  return lambda.invoke.bind(lambda)
 }

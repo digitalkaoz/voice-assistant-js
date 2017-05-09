@@ -1,10 +1,8 @@
-import { IEvent } from '../../typings'
-
-import { AlexaObject } from 'alexa-sdk'
+import { AlexaSdk, IEvent } from '../../typings'
 
 export class AlexaEvent implements IEvent {
 
-  constructor(private handler: AlexaObject) {
+  constructor(private handler: AlexaSdk) {
   }
 
   public tell(text: string) {

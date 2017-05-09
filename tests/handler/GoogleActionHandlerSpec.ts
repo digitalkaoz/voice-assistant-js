@@ -7,7 +7,7 @@ describe('GoogleActionHandler', () => {
 
   const event = require('../fixtures/google-action/event.json')
 
-  it('calls the given IApi', async () => {
+  it('calls the given Api', async () => {
     const callback = jest.fn()
     await new GoogleActionHandler(new Container(mapping)).handle(event, {}, callback)
 

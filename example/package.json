@@ -5,11 +5,13 @@
   "license": "MIT",
   "dependencies": {
     "actions-on-google": "^1.0.9",
+    "alexa-sdk": "^1.0.9",
+    "express": "^4.15.2",
     "reflect-metadata": "^0.1.10",
-    "voice-assistant-js": "file:/Users/caziel/workspace/own/voice-assistent-js"
+    "typedi": "^0.5.1"
   },
   "scripts": {
-    "deploy": "rm -rf node_modules/* && yarn install --force --production && npm run package && npm run upload",
+    "deploy": "yarn clean && yarn package && yarn upload",
     "package": "zip -r package.zip .",
     "upload": "aws lambda update-function-code --function-name sonos --zip-file fileb://package.zip"
   }

@@ -8,7 +8,7 @@ describe('AlexaHandler', () => {
   const event = require('../fixtures/alexa/event.json')
   const context = require('../fixtures/alexa/context.json')
 
-  it('calls the given IApi', async () => {
+  it('calls the given Api', async () => {
     const callback = jest.fn()
 
     context.succeed = callback

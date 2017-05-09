@@ -1,4 +1,5 @@
-const voiceAssistent = require('voice-assistant-js').AutoDetectHandler
+require('reflect-metadata')
+const lambda = require('./node_modules/voice-assistant-js/src/Container').lambda
 
 class Pause {
   pauseIntent (event) {
@@ -12,10 +13,4 @@ const mapping = {
   'PauseIntent': Pause
 }
 
-const handler = function (event, context, callback) {
-  console.log(JSON.stringify(event), JSON.stringify(context))
-
-  voiceAssistent.handle(mapping, event, context, callback)
-}
-
-exports.handler = handler
+exports.handler = lambda(mapping)

@@ -1,3 +1,5 @@
+import {AlexaObject, Handler} from 'alexa-sdk'
+
 export declare interface IApiMapping {
   [key: string]: Function
 }
@@ -26,3 +28,5 @@ export declare interface IHandler {
 export declare interface IFunction {
   invoke(event: any, context: any, callback: (data: any) => any)
 }
+
+export declare interface AlexaSdk extends AlexaObject, Handler {}

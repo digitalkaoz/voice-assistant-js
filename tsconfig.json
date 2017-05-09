@@ -6,25 +6,27 @@
     "experimentalDecorators": true,
     "outDir": "dist",
     "inlineSourceMap": true,
+    "pretty": true,
     "declaration": true,
     "lib": ["es6"],
+    "alwaysStrict": true,
     "removeComments": true,
     "preserveConstEnums": true,
     "moduleResolution": "node",
     "types": [
       "node",
-      "reflect-metadata"
+      "reflect-metadata",
+      "typedi"
     ]
   },
   "exclude": [
+    "tests"
   ],
   "typeRoots": [
     "node_modules/@types"
   ],
   "include": [
     "src/**/*.ts",
-    "tests/**/*.ts",
-    "node_modules/typedi/**/*.ts",
-    "node_modules/@types/jest/index.d.ts"
+    "node_modules/typedi"
   ]
 }

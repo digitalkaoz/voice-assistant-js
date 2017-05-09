@@ -1,7 +1,7 @@
 {
   "name": "voice-assistant-js",
   "version": "0.1.0",
-  "main": "dist/src/handler/AutoDetectHandler.js",
+  "main": "dist/src/Container.js",
   "devDependencies": {
     "@types/alexa-sdk": "^1.0.4",
     "@types/express": "^4.0.35",
@@ -29,12 +29,16 @@
     "express": "if you want to use google/api-ai requests"
   },
   "scripts": {
+    "test": "npm run cleanup && jest && npm run test:int",
+    "test:int" : "ts-node tests/test.ts",
+    "test:cov": "jest --coverage",
+
+    "cleanup": "rm -rf src/**/*.js tests/**/*.js dist/* || true",
     "cs": "standard --pretty src/**/*.ts tests/**/*.ts",
-    "test": "jest",
     "lint": "tslint --type-check --fix --project tsconfig.json",
-    "int" : "ts-node tests/test.ts",
-    "coverage": "jest --coverage",
-    "build": "NODE_ENV=production rm -rf dist/* && npm run cs && tsc"
+
+    "transpile" : "tsc --project tsconfig.json",
+    "build": "NODE_ENV=production && npm run cleanup && npm run lint && npm run cs && npm run transpile"
   },
   "jest": {
     "moduleFileExtensions": [
