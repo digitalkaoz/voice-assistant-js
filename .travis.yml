@@ -24,4 +24,4 @@ script:
   - $TEST_COMMAND
 
 after_success:
-  - if [[ "$COVERAGE" = true ]]; then yarn coverage:upload; fi
+  - if [[ "$COVERAGE" = true ]]; then yarn add coveralls@2 && yarn coverage:upload; fi
