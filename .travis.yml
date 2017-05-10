@@ -1,17 +1,24 @@
 language: node_js
 
-node_js:
-  - 'stable'
-  - '7'
-  - '6'
-
 sudo: false
+
+env:
+  global:
+    - TEST_COMMAND="npm test"
+    - COVERAGE=false
 
 matrix:
   fast_finish: true
+  include:
+  - node_js: 7
+    env: TEST_COMMAND="npm test:cov" COVERAGE=true
+  - node_js: 6
+  - node_js: "stable"
 
 cache:
   yarn: true
   directories:
     - node_modules
 
+after_success:
+  - if [[ "$COVERAGE" = true ]]; then npm run coverage:upload; fi
