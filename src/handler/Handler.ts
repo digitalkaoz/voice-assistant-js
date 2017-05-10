@@ -17,11 +17,11 @@ export abstract class Handler implements IHandler {
     })
   }
 
-  public async handle(event, context, callback?: (error?: Error, data?: any) => any): Promise<any> {
+  public handle(event, context, callback?: (error?: Error, data?: any) => any) {
     const eventWrapper = this.createEvent(event, context, callback)
     const api = this.container.get<IApi>(eventWrapper.intent())
 
-    return await api[Handler.camelize(eventWrapper.intent())](eventWrapper)
+    api[Handler.camelize(eventWrapper.intent())](eventWrapper)
   }
 
   protected abstract createEvent(event, context, callback: () => any): IEvent

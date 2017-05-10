@@ -3,9 +3,7 @@ const lambda = require('./node_modules/voice-assistant-js/src/Container').lambda
 
 class Pause {
   pauseIntent (event) {
-    return new Promise(function (resolve) {
-      resolve(event.tell('foo'))
-    })
+    event.tell('foo')
   }
 }
 

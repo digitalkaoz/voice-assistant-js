@@ -1,8 +1,6 @@
 export class Pause {
-  public pauseIntent(event): Promise<string> {
-    return new Promise((resolve) => {
-      resolve(event.tell('foo'))
-    })
+  public pauseIntent(event) {
+    event.tell('foo')
   }
 }
 

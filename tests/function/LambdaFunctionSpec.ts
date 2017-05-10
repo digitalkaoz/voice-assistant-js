@@ -8,7 +8,6 @@ const event = require('../fixtures/alexa/event.json')
 const context = require('../fixtures/alexa/context.json')
 
 describe('LamdaFunction', () => {
-
   it('calls the given IApi', () => {
     const lamda = new LamdaFunction(new AutoDetectHandler(new Container(mapping)))
     const callback = jest.fn()
@@ -21,8 +20,11 @@ describe('LamdaFunction', () => {
         outputSpeech: {
           ssml: '<speak> foo </speak>',
           type: 'SSML'
-        }, shouldEndSession: true
-      }, sessionAttributes: {}, version: '1.0'
+        },
+        shouldEndSession: true
+      },
+      sessionAttributes: {},
+      version: '1.0'
     })
   })
 })

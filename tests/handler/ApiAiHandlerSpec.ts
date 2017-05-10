@@ -4,7 +4,6 @@ import { ApiAiHandler } from '../../src/handler/ApiAiHandler'
 import mapping from '../fixtures/mapping'
 
 describe('ApiAiHandler', () => {
-
   const event = require('../fixtures/apiai/event.json')
 
   it('calls the given Api', async () => {

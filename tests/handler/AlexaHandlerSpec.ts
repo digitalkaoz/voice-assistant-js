@@ -4,7 +4,6 @@ import { AlexaHandler } from '../../src/handler/AlexaHandler'
 import mapping from '../fixtures/mapping'
 
 describe('AlexaHandler', () => {
-
   const event = require('../fixtures/alexa/event.json')
   const context = require('../fixtures/alexa/context.json')
 
@@ -19,8 +18,11 @@ describe('AlexaHandler', () => {
         outputSpeech: {
           ssml: '<speak> foo </speak>',
           type: 'SSML'
-        }, shouldEndSession: true
-      }, sessionAttributes: {}, version: '1.0'
+        },
+        shouldEndSession: true
+      },
+      sessionAttributes: {},
+      version: '1.0'
     })
   })
 })

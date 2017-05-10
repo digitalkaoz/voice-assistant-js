@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+  - 'stable'
+  - 'latest'
+  - '6'
+
+sudo: false
+
+matrix:
+  fast_finish: true
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+

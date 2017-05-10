@@ -4,7 +4,6 @@ import { GoogleActionHandler } from '../../src/handler/GoogleActionHandler'
 import mapping from '../fixtures/mapping'
 
 describe('GoogleActionHandler', () => {
-
   const event = require('../fixtures/google-action/event.json')
 
   it('calls the given Api', async () => {

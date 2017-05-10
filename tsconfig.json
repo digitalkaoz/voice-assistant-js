@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es6",
+    "target": "ES6",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "dist",
@@ -26,7 +26,6 @@
     "node_modules/@types"
   ],
   "include": [
-    "src/**/*.ts",
-    "node_modules/typedi"
+    "src/**/*.ts"
   ]
 }

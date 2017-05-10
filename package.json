@@ -30,15 +30,13 @@
   },
   "scripts": {
     "test": "npm run cleanup && jest && npm run test:int",
-    "test:int" : "ts-node tests/test.ts",
+    "test:int": "ts-node tests/test.ts",
     "test:cov": "jest --coverage",
-
-    "cleanup": "rm -rf src/**/*.js tests/**/*.js dist/* || true",
-    "cs": "standard --pretty src/**/*.ts tests/**/*.ts",
+    "cleanup": "rm -rf src/**/*.js tests/**/*.js tests/*.js dist/* || true",
+    "cs": "standard --fix --pretty ./**/*.ts",
     "lint": "tslint --type-check --fix --project tsconfig.json",
-
-    "transpile" : "tsc --project tsconfig.json",
-    "build": "NODE_ENV=production && npm run cleanup && npm run lint && npm run cs && npm run transpile"
+    "transpile": "tsc --project tsconfig.json",
+    "build": "NODE_ENV=production && npm run cleanup && npm run transpile"
   },
   "jest": {
     "moduleFileExtensions": [

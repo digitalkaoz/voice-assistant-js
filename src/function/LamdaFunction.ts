@@ -5,7 +5,7 @@ import { Handler } from '../Container'
 @Service('lambda')
 export class LamdaFunction implements IFunction {
 
-  constructor( @Inject(Handler.name) private handler: IHandler) {
+  constructor(@Inject(type => Handler) private handler: IHandler) {
   }
 
   public invoke(event, context, callback) {
