@@ -1,0 +1,7 @@
+node_modules/
+*.tgz
+src
+!dist/**
+tests/
+tsconfig.json
+tslint.json

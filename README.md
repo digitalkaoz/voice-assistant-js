@@ -29,7 +29,7 @@ class IntentClass {
   }
   
   ask (event) {
-    event.tell('ask')
+    event.ask('ask')
   }
 }
 
@@ -50,3 +50,11 @@ exports.handler = lambda(mapping)
 ```
 $ yarn test
 ```
+
+## TODOS
+
+* implement cards
+* implement forms
+* implement dialogs
+* reliable error-handling
+* google-cloud-function
