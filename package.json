@@ -1,7 +1,8 @@
 {
   "name": "voice-assistant-js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/src/Container.js",
+  "types": "./dist/typings.d.ts",
   "devDependencies": {
     "@types/alexa-sdk": "^1.0.4",
     "@types/express": "^4.0.35",
