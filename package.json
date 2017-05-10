@@ -34,7 +34,7 @@
     "test": "npm run cleanup && jest && npm run test:int",
     "test:int": "ts-node tests/test.ts",
     "test:cov": "jest --coverage && npm run test:int",
-    "coverage:upload" : "cat ./coverage/lcov.info | coveralls",
+    "coverage:upload" : "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "cleanup": "rm -rf src/**/*.js tests/**/*.js tests/*.js dist/* || true",
     "cs": "standard --fix --pretty ./**/*.ts",
     "lint": "tslint --type-check --fix --project tsconfig.json",
