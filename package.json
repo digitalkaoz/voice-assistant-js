@@ -1,6 +1,6 @@
 {
   "name": "voice-assistant-js",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "dist/src/Container.js",
   "types": "./dist/typings.d.ts",
   "devDependencies": {
