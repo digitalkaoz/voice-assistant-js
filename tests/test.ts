@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import {lambda} from '../src/Container'
+import { lambda } from '../src/Container'
 import mapping from './fixtures/mapping'
 
 console.log('alexa' + '\n')

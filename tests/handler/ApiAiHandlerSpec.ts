@@ -6,9 +6,10 @@ import mapping from '../fixtures/mapping'
 describe('ApiAiHandler', () => {
   const event = require('../fixtures/apiai/event.json')
 
-  it('calls the given Api', async () => {
+  it('calls the given Api', () => {
     const callback = jest.fn()
-    await new ApiAiHandler(new Container(mapping)).handle(event, {}, callback)
+
+    new ApiAiHandler(new Container(mapping)).handle(event, {}, callback)
 
     expect(callback).toHaveBeenCalledWith(undefined, {
       contextOut: [],

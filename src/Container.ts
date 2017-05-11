@@ -1,39 +1,31 @@
-import {Container as Injector, Service, Token} from 'typedi'
-import {IApiMapping, IContainer as IContainer, IFunction, IHandler} from '../typings'
-import {DefaultApi} from './api/DefaultApi'
+import { TSDI } from 'tsdi'
+import { IApiMapping, IFunction } from '../typings'
+import { DefaultApi } from './api/DefaultApi'
+import { LamdaFunction } from './function/LamdaFunction'
 
-@Service()
-export class Container implements IContainer {
+export class Container extends TSDI {
 
-  constructor (mapping: IApiMapping) {
+  constructor(mapping: IApiMapping) {
+    super()
+
+    this.enableComponentScanner()
+
     this.injectApis(mapping)
   }
 
-  injectApis (mapping: IApiMapping): void {
-    Injector.registerService({id: 'default', type: DefaultApi})
+  private injectApis(mapping: IApiMapping): void {
+    this.register(DefaultApi, 'default')
 
     for (const key in mapping) {
       if (mapping.hasOwnProperty(key)) {
-        Injector.registerService({
-          id: key,
-          type: mapping[key]
-        })
+        this.register(mapping[key], key)
       }
     }
   }
-
-  public get<T> (key: any): T {
-    return Injector.get<T>(key)
-  }
 }
 
-export const Handler = new Token<IHandler>('handler')
-
-export function lambda (mapping: IApiMapping) {
-  require('./handler/AutoDetectHandler')
-  require('./function/LamdaFunction')
-
-  const lambda = new Container(mapping).get<IFunction>('lambda')
+export function lambda(mapping: IApiMapping) {
+  const lambda = new Container(mapping).get<IFunction>(LamdaFunction)
 
   return lambda.invoke.bind(lambda)
 }

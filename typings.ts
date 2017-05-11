@@ -1,7 +1,8 @@
 import {AlexaObject, Handler} from 'alexa-sdk'
+import {Constructable} from 'tsdi'
 
 export declare interface IApiMapping {
-  [key: string]: Function
+  [key: string]: Constructable<IApi>
 }
 
 export declare function require(moduleName: string): any
@@ -22,6 +23,13 @@ export declare interface IHandler {
   // createEvent(event: any, context: any, callback: () => any): IEvent;
   handle(event: any, context: any, callback: () => any)
 }
+
+export declare interface HandlerConstructor {
+  new (handler?: any): IHandler
+  clone(): IHandler
+}
+
+export declare const ApiHandler: HandlerConstructor
 
 // TODO add specific interfaces for different event and context objects
 

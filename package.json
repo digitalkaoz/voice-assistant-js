@@ -21,8 +21,10 @@
     "typescript-standard": "^0.3.30"
   },
   "dependencies": {
+    "i18next": "^8.2.1",
     "reflect-metadata": "^0.1.10",
-    "typedi": "^0.5.1"
+    "tsdi": "^0.9.5",
+    "typescript-debug": "^0.1.0"
   },
   "peerDependencies": {
     "actions-on-google": "if you want to use google/api-ai requests",
@@ -38,7 +40,7 @@
     "cs": "standard --fix --pretty ./**/*.ts",
     "lint": "tslint --type-check --fix --project tsconfig.json",
     "transpile": "tsc --project tsconfig.json",
-    "build": "NODE_ENV=production && npm run cleanup && npm run transpile",
+    "build": "NODE_ENV=production && npm run cleanup && npm run lint && npm run cs && npm run transpile",
     "prepublish": "npm run build"
   },
   "jest": {
