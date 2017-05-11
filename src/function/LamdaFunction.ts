@@ -1,6 +1,6 @@
 import {Component, Inject} from 'tsdi'
 import {IFunction} from '../../typings'
-import {AutoDetectHandler} from '../Handler/AutoDetectHandler'
+import {AutoDetectHandler} from '../handler/AutoDetectHandler'
 
 @Component()
 export class LamdaFunction implements IFunction {
