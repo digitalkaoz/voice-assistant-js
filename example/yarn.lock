@@ -279,9 +279,9 @@ range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-reflect-metadata@^0.1.10:
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.10.tgz#b4f83704416acad89988c9b15635d47e03b9344a"
+reflect-metadata@0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.3.tgz#64f8a41974e4f5a5aa9978dac54cfd442dc2f1d5"
 
 sax@1.2.1, sax@>=0.6.0:
   version "1.2.1"
@@ -322,16 +322,18 @@ setprototypeof@1.0.3:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e"
 
+tsdi@^0.9.5:
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/tsdi/-/tsdi-0.9.5.tgz#289dea7077482b3c5e02cc6c68f6d93b5059a000"
+  dependencies:
+    reflect-metadata "0.1.3"
+
 type-is@~1.6.14:
   version "1.6.15"
   resolved "https://registry.yarnpkg.com/type-is/-/type-is-1.6.15.tgz#cab10fb4909e441c82842eafe1ad646c81804410"
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.15"
-
-typedi@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/typedi/-/typedi-0.5.1.tgz#f5b4c65532f31ba5786d71c728bfb957905e2101"
 
 unpipe@~1.0.0:
   version "1.0.0"

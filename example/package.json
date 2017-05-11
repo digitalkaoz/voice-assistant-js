@@ -7,8 +7,7 @@
     "actions-on-google": "^1.0.9",
     "alexa-sdk": "^1.0.9",
     "express": "^4.15.2",
-    "reflect-metadata": "^0.1.10",
-    "typedi": "^0.5.1"
+    "tsdi": "^0.9.5"
   },
   "scripts": {
     "deploy": "yarn clean && yarn package && yarn upload",
