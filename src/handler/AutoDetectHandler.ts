@@ -1,16 +1,18 @@
-import { Service } from 'typedi'
-import { IEvent } from '../../typings'
-import { Handler as IHandler } from '../Container'
-import { Handler } from './Handler'
+import {Component} from 'tsdi'
+// import {TraceClass} from 'typescript-debug'
+import {IEvent} from '../../typings'
+import {AlexaHandler} from './AlexaHandler'
 
 import {ApiAiHandler} from './ApiAiHandler'
-import {AlexaHandler} from './AlexaHandler'
 import {GoogleActionHandler} from './GoogleActionHandler'
+import {Handler} from './Handler'
 
-@Service(IHandler)
+@Component()
+
+// @TraceClass()
 export class AutoDetectHandler extends Handler {
 
-  public static event(event: any, context: any, callback: () => any) {
+  public static event (event: any, context: any, callback: () => any) {
     // TODO better request checks
 
     if (event.hasOwnProperty('conversation')) {
@@ -24,7 +26,7 @@ export class AutoDetectHandler extends Handler {
     throw new Error('event could not be parsed')
   }
 
-  protected createEvent(event: any, context: any, callback: () => any): IEvent {
+  protected createEvent (event: any, context: any, callback: () => any): IEvent {
     return AutoDetectHandler.event(event, context, callback)
   }
 }

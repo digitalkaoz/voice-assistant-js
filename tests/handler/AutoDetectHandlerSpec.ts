@@ -1,5 +1,5 @@
-import { Container } from '../../src/Container'
-import { AutoDetectHandler } from '../../src/handler/AutoDetectHandler'
+import {Container} from '../../src/Container'
+import {AutoDetectHandler} from '../../src/handler/AutoDetectHandler'
 
 import mapping from '../fixtures/mapping'
 
@@ -17,37 +17,37 @@ describe('AutoDetectHandler', () => {
     callback = jest.fn()
   })
 
-  it('detects api-ai request', async () => {
-    await handler.handle(API_AI_EVENT, {}, callback)
+  it('detects api-ai request', () => {
+    handler.handle(API_AI_EVENT, {}, callback)
 
     expect(callback).toHaveBeenCalledWith(undefined, {
       contextOut: [],
-      data: { google: { expect_user_response: false, is_ssml: false, no_input_prompts: [] } },
+      data: {google: {expect_user_response: false, is_ssml: false, no_input_prompts: []}},
       speech: 'default'
     })
   })
 
-  it('detects alexa request', async () => {
+  it('detects alexa request', () => {
     const context = {
       succeed: callback
     }
 
-    await handler.handle(ALEXA_EVENT, context, callback)
+    handler.handle(ALEXA_EVENT, context, callback)
 
     expect(callback).toHaveBeenCalledWith({
       response: {
-        outputSpeech: { ssml: '<speak> foo </speak>', type: 'SSML' },
+        outputSpeech: {ssml: '<speak> foo </speak>', type: 'SSML'},
         shouldEndSession: true
       }, sessionAttributes: {}, version: '1.0'
     })
   })
 
-  it('detects google-action request', async () => {
-    await handler.handle(GOOGLE_ACTION_EVENT, {}, callback)
+  it('detects google-action request', () => {
+    handler.handle(GOOGLE_ACTION_EVENT, {}, callback)
 
     expect(callback).toHaveBeenCalledWith(undefined, {
       expect_user_response: false,
-      final_response: { speech_response: { text_to_speech: 'default' } }
+      final_response: {speech_response: {text_to_speech: 'default'}}
     })
   })
 

@@ -62,8 +62,9 @@ $ yarn test
 
 ## TODOS
 
-* implement cards
-* implement forms
-* implement dialogs
-* reliable error-handling
-* google-cloud-function
+- [ ] i18n
+- [ ] cards
+- [ ] forms
+- [ ] dialogs
+- [ ] error-handling
+- [ ] google-cloud-function

@@ -1,14 +1,13 @@
-import { IFunction, IHandler } from '../../typings'
-import { Inject, Service } from 'typedi'
-import { Handler } from '../Container'
+import {Component, Inject} from 'tsdi'
+import {IFunction} from '../../typings'
+import {AutoDetectHandler} from '../Handler/AutoDetectHandler'
 
-@Service('lambda')
+@Component()
 export class LamdaFunction implements IFunction {
 
-  constructor(@Inject(type => Handler) private handler: IHandler) {
-  }
+  constructor (@Inject() private handler: AutoDetectHandler) {}
 
-  public invoke(event, context, callback) {
+  public invoke (event, context, callback) {
     if (process.env.DEBUG) {
       console.log(JSON.stringify(event), JSON.stringify(context))
     }

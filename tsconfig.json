@@ -15,17 +15,15 @@
     "moduleResolution": "node",
     "types": [
       "node",
-      "reflect-metadata",
-      "typedi"
+      "tsdi"
     ]
   },
   "exclude": [
-    "tests"
+    "tests",
+    "node_modules",
+    "example"
   ],
   "typeRoots": [
     "node_modules/@types"
-  ],
-  "include": [
-    "src/**/*.ts"
   ]
 }
