@@ -13,6 +13,7 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
     "types": [
       "node",
       "tsdi"

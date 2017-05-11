@@ -40,7 +40,7 @@
     "cs": "standard --fix --pretty ./**/*.ts",
     "lint": "tslint --type-check --fix --project tsconfig.json",
     "transpile": "tsc --project tsconfig.json",
-    "build": "NODE_ENV=production && npm run cleanup && npm run lint && npm run cs && npm run transpile",
+    "build": "NODE_ENV=production && npm run cleanup && npm run lint && npm run cs && npm run cleanup && npm run transpile",
     "prepublish": "npm run build"
   },
   "jest": {
