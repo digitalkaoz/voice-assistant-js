@@ -4,7 +4,8 @@ one client library to rule them all (api-ai, google-action, alexa, ...)
 
 [![Build Status](https://travis-ci.org/digitalkaoz/voice-assistant-js.svg?branch=master)](https://travis-ci.org/digitalkaoz/voice-assistant-js)
 [![Coverage Status](https://coveralls.io/repos/github/digitalkaoz/voice-assistant-js/badge.svg?branch=master)](https://coveralls.io/github/digitalkaoz/voice-assistant-js?branch=master)
-[![npm version](https://badge.fury.io/js/voice-assistant-js@2x.png)](https://badge.fury.io/js/voice-assistant-js)
+[![npm](https://img.shields.io/npm/v/voice-assistant-js.svg)]()
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/digitalkaoz/voice-assistant-js/master/LICENSE)
 
 ## Installation
 
