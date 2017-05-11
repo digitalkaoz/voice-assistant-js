@@ -10,13 +10,14 @@ one client library to rule them all (api-ai, google-action, alexa, ...)
 ## Installation
 
 ```
-$ yarn install voice-assistant-js
+$ yarn add voice-assistant-js
 ```
 
 then you should install the client library you want.
 
-`actions-on-google` and `express` if you want to use **api-ai** or **google-actions**
-`alexa-sdk` if you want to use **alexa**
+* `actions-on-google` and `express` if you want to use **api-ai** or **google-actions**
+
+* `alexa-sdk` if you want to use **alexa**
 
 ## Usage
 
