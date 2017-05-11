@@ -4,6 +4,7 @@ one client library to rule them all (api-ai, google-action, alexa, ...)
 
 [![Build Status](https://travis-ci.org/digitalkaoz/voice-assistant-js.svg?branch=master)](https://travis-ci.org/digitalkaoz/voice-assistant-js)
 [![Coverage Status](https://coveralls.io/repos/github/digitalkaoz/voice-assistant-js/badge.svg?branch=master)](https://coveralls.io/github/digitalkaoz/voice-assistant-js?branch=master)
+[![npm version](https://badge.fury.io/js/voice-assistant-js@2x.png)](https://badge.fury.io/js/voice-assistant-js)
 
 ## Installation
 
@@ -50,6 +51,9 @@ const mapping = {
 exports.handler = lambda(mapping)
 ```
 
+so if you the lamda is invoked with the *intent* **ask** 
+the function `IntentClass.ask` is called...
+
 ### on google-cloud-functions
 
 //TODO
@@ -62,6 +66,7 @@ $ yarn test
 
 ## TODOS
 
+- [ ] event construction with DI factory (so we can get rid of the specific handler classes)
 - [ ] i18n
 - [ ] cards
 - [ ] forms
