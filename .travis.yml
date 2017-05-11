@@ -6,12 +6,13 @@ env:
   global:
     - TEST_COMMAND="yarn test"
     - COVERAGE=false
+    - DEPLOY=false
 
 matrix:
   fast_finish: true
   include:
   - node_js: 7
-    env: TEST_COMMAND="yarn test:cov" COVERAGE=true
+    env: TEST_COMMAND="yarn test:cov" COVERAGE=true DEPLOY=true
   - node_js: 6
   - node_js: "stable"
 
@@ -19,9 +20,11 @@ deploy:
   provider: npm
   email: $EMAIL
   api_key: $NPM_TOKEN
+  script: yarn publish --strict-semver --tag $TRAVIS_TAG
   on:
     tags: true
     skip_cleanup: true
+    condition: $DEPLOY = true
 
 cache:
   yarn: true
