@@ -1,9 +1,9 @@
 import {Component} from 'tsdi'
 import {IApi, IFunction} from '../../typings'
-import {Function} from './Function'
+import {BaseFunction} from './BaseFunction'
 
 @Component()
-export class LamdaFunction extends Function implements IFunction {
+export class LamdaFunction extends BaseFunction implements IFunction {
 
   public invoke (rawEvent, context, callback) {
     if (process.env.DEBUG) {

@@ -6,7 +6,8 @@ import {GoogleActionEvent} from '../event/GoogleActionEvent'
 import {AlexaHandler} from '../handler/AlexaHandler'
 import {ApiAiHandler} from '../handler/ApiAiHandler'
 import {GoogleActionHandler} from '../handler/GoogleActionHandler'
-export abstract class Function {
+
+export abstract class BaseFunction {
 
   constructor (@Inject() protected container: TSDI) {}
 

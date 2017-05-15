@@ -1,12 +1,12 @@
 import {ApiAiAssistent} from 'actions-on-google/api-ai-assistant.js'
 import {Card} from 'alexa-sdk'
-import {Component, Inject} from 'tsdi'
+import {Component} from 'tsdi'
 import {IEvent} from '../../typings'
 
 @Component()
 export class ApiAiEvent implements IEvent {
 
-  constructor (@Inject({name: 'api-ai'}) private assistant: ApiAiAssistent) { }
+  constructor (/*@Inject({name: 'api-ai'})*/ private assistant: ApiAiAssistent) { }
 
   public intent (): string {
     return this.assistant.getIntent()

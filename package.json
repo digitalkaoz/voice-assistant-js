@@ -11,7 +11,7 @@
     "actions-on-google": "^1.0.9",
     "alexa-sdk": "^1.0.9",
     "express": "^4.15.2",
-    "jest": "^20.0.0",
+    "jest": "^20.0.1",
     "standard": "^10.0.2",
     "ts-jest": "^20.0.0",
     "ts-node": "^3.0.4",
