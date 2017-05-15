@@ -32,10 +32,9 @@
     "express": "if you want to use google/api-ai requests"
   },
   "scripts": {
-    "test": "npm run cleanup && jest && npm run test:int",
-    "test:watch": "npm run cleanup && jest --watch && npm run test:int",
-    "test:int": "ts-node tests/test.ts",
-    "test:cov": "jest --coverage && npm run test:int",
+    "test": "npm run cleanup && jest",
+    "test:watch": "npm run cleanup && jest --watch",
+    "test:cov": "jest --coverage",
     "coverage:upload": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "cleanup": "rm -rf dist/* || true",
     "cs": "standard --fix --pretty ./**/*.ts",
