@@ -31,6 +31,19 @@ export class Example implements IApi {
       }
     })
   }
+
+  public tellLinkAccountCard (event: IEvent) {
+    event.tellWithLinkAccountCard('speech')
+  }
+
+  public askLinkAccountCard (event: IEvent) {
+    event.askWithLinkAccountCard('speech')
+  }
+
+  public delegate (event: IEvent) {
+    event.delegate('askCard')
+  }
+
 }
 
 export default {

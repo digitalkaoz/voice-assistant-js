@@ -1,44 +1,73 @@
-import {LambdaHandler} from 'alexa-sdk/lib/alexa.js'
+import {handler} from 'alexa-sdk'
 import {AlexaEvent} from '../../src/event/AlexaEvent'
+import {AlexaSdk} from '../../typings'
 
 describe('AlexaEvent', () => {
 
+  const mockEvent = require('../fixtures/alexa/event.json')
+  let context = require('../fixtures/alexa/context.json')
+
   let event: AlexaEvent
-  let handler
   let callback: () => any
 
   beforeEach(() => {
-    const mockEvent = require('../fixtures/alexa/event.json')
     callback = jest.fn()
 
-    handler = new LambdaHandler(mockEvent, {}, callback)
+    context.succeed = callback
 
-    event = new AlexaEvent(handler)
+    event = new AlexaEvent(handler(mockEvent, context, callback) as AlexaSdk)
   })
 
   it('can tell', () => {
-    const spy = jest.spyOn(handler, 'emit').mockReturnThis()
-
     event.tell('foo')
 
-    expect(spy).toHaveBeenCalledWith(':tell', 'foo')
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        outputSpeech: {
+          ssml: '<speak> foo </speak>',
+          type: 'SSML'
+        },
+        shouldEndSession: true
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
   })
 
   it('can ask', () => {
-    const spy = jest.spyOn(handler, 'emit').mockReturnThis()
-
     event.ask('foo')
 
-    expect(spy).toHaveBeenCalledWith(':ask', 'foo')
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        outputSpeech: {
+          ssml: '<speak> foo </speak>',
+          type: 'SSML'
+        },
+        shouldEndSession: false
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
   })
 
   it('returns the intent', () => {
     expect(event.intent()).toBe('tell')
   })
 
-  it('can ask with card', () => {
-    const spy = jest.spyOn(handler, 'emit').mockReturnThis()
+  it('can delegate', () => {
+    event.delegate('askCard')
 
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        directives: [{type: 'Dialog.Delegate', updatedIntent: 'askCard'}],
+        shouldEndSession: false
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
+  })
+
+  it('can ask with card', () => {
     event.askWithCard('foo', 'fooBar', {
       type: 'Standard',
       title: 'cardTitle',
@@ -46,14 +75,77 @@ describe('AlexaEvent', () => {
       image: {smallImageUrl: 'http://small', largeImageUrl: 'http://large'}
     })
 
-    expect(spy).toHaveBeenCalledWith(':askWithCard',
-      'foo',
-      'fooBar',
-      'cardTitle',
-      'cardContent', {
-        'largeImageUrl': 'http://large',
-        'smallImageUrl': 'http://small'
-      })
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        card: {
+          image: {largeImageUrl: 'http://large', smallImageUrl: 'http://small'},
+          text: 'cardContent',
+          title: 'cardTitle',
+          type: 'Standard'
+        },
+        outputSpeech: {ssml: '<speak> foo </speak>', type: 'SSML'},
+        reprompt: {outputSpeech: {ssml: '<speak> fooBar </speak>', type: 'SSML'}},
+        shouldEndSession: false
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
+  })
+
+  it('can tell with card', () => {
+    event.tellWithCard('foo', {
+      type: 'Standard',
+      title: 'cardTitle',
+      content: 'cardContent',
+      image: {smallImageUrl: 'http://small', largeImageUrl: 'http://large'}
+    })
+
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        card: {
+          image: {largeImageUrl: 'http://large', smallImageUrl: 'http://small'},
+          text: 'cardContent',
+          title: 'cardTitle',
+          type: 'Standard'
+        },
+        outputSpeech: {ssml: '<speak> foo </speak>', type: 'SSML'},
+        shouldEndSession: true
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
+  })
+
+  it('can tell with link account card', () => {
+    event.tellWithLinkAccountCard('foo')
+
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        card: {
+          type: 'LinkAccount'
+        },
+        outputSpeech: {ssml: '<speak> foo </speak>', type: 'SSML'},
+        shouldEndSession: true
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
+  })
+
+  it('can ask with link account card', () => {
+    event.askWithLinkAccountCard('foo')
+
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        card: {
+          type: 'LinkAccount'
+        },
+        outputSpeech: {ssml: '<speak> foo </speak>', type: 'SSML'},
+        shouldEndSession: false
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
   })
 
 })

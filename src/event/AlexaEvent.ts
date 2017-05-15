@@ -39,8 +39,10 @@ export class AlexaEvent implements IEvent {
 
   /*
    this.emit(':tellWithPermissionCard', speechOutput, permissionArray);
+
    this.emit(':elicitSlot', slotToElicit, speechOutput, repromptSpeech, updatedIntent);
    this.emit(':elicitSlotWithCard', slotToElicit, speechOutput, repromptSpeech, cardTitle, cardContent, updatedIntent, imageObj);
+
    this.emit(':confirmSlot', slotToConfirm, speechOutput, repromptSpeech, updatedIntent);
    this.emit(':confirmSlotWithCard', slotToConfirm, speechOutput, repromptSpeech, cardTitle, cardContent, updatedIntent, imageObj);
    this.emit(':confirmIntent', speechOutput, repromptSpeech, updatedIntent);

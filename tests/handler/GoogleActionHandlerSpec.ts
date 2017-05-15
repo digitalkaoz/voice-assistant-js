@@ -1,21 +1,34 @@
-import {DefaultApi} from '../../src/api/DefaultApi'
 import {GoogleActionEvent} from '../../src/event/GoogleActionEvent'
 import {GoogleActionHandler} from '../../src/handler/GoogleActionHandler'
+import {IEvent} from '../../typings'
+import {Example} from '../fixtures/mapping'
 
 describe('GoogleActionHandler', () => {
-  const event = require('../fixtures/google-action/event.json')
+  let event: IEvent
 
-  test('calls the given Api', () => {
-    const callback = jest.fn()
+  const handle = () => {
+    return new GoogleActionHandler().handle(event, new Example())
+  }
 
-    const handler = new GoogleActionHandler()
-    const sdk = handler.createSdkHandler(event, {}, callback)
+  beforeEach(() => {
+    event = new GoogleActionEvent({})
+  })
 
-    handler.handle(new GoogleActionEvent(sdk), new DefaultApi())
+  it('can tell', () => {
+    const spy = jest.spyOn(event, 'tell').mockReturnThis()
+    jest.spyOn(event, 'intent').mockReturnValue('tell')
 
-    expect(callback).toHaveBeenCalledWith(undefined, {
-      expect_user_response: false,
-      final_response: {speech_response: {text_to_speech: 'default'}}
-    })
+    handle()
+
+    expect(spy).toHaveBeenCalledWith('foo')
+  })
+
+  it('can ask', () => {
+    const spy = jest.spyOn(event, 'ask').mockReturnThis()
+    jest.spyOn(event, 'intent').mockReturnValue('ask')
+
+    handle()
+
+    expect(spy).toHaveBeenCalledWith('foo')
   })
 })

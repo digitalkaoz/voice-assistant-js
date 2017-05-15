@@ -1,22 +1,36 @@
-import {DefaultApi} from '../../src/api/DefaultApi'
 import {ApiAiEvent} from '../../src/event/ApiAiEvent'
 import {ApiAiHandler} from '../../src/handler/ApiAiHandler'
+import {IEvent} from '../../typings'
+import {Example} from '../fixtures/mapping'
 
 describe('ApiAiHandler', () => {
-  const event = require('../fixtures/apiai/event.json')
 
-  it('calls the given Api', () => {
-    const callback = jest.fn()
+  let event: IEvent
 
-    const handler = new ApiAiHandler()
-    const sdk = handler.createSdkHandler(event, {}, callback)
+  const handle = () => {
+    return new ApiAiHandler().handle(event, new Example())
+  }
 
-    handler.handle(new ApiAiEvent(sdk), new DefaultApi())
-
-    expect(callback).toHaveBeenCalledWith(undefined, {
-      contextOut: [],
-      data: {google: {expect_user_response: false, is_ssml: false, no_input_prompts: []}},
-      speech: 'default'
-    })
+  beforeEach(() => {
+    event = new ApiAiEvent({})
   })
+
+  it('can tell', () => {
+    const spy = jest.spyOn(event, 'tell').mockReturnThis()
+    jest.spyOn(event, 'intent').mockReturnValue('tell')
+
+    handle()
+
+    expect(spy).toHaveBeenCalledWith('foo')
+  })
+
+  it('can ask', () => {
+    const spy = jest.spyOn(event, 'ask').mockReturnThis()
+    jest.spyOn(event, 'intent').mockReturnValue('ask')
+
+    handle()
+
+    expect(spy).toHaveBeenCalledWith('foo')
+  })
+
 })

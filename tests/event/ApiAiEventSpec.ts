@@ -1,40 +1,47 @@
-import { ApiAiEvent } from '../../src/event/ApiAiEvent'
-
-// TODO do we really want to mock?
-jest.mock('actions-on-google/api-ai-assistant.js')
-const apiAiAssistant = require('actions-on-google/api-ai-assistant.js')
+import {ApiAiEvent} from '../../src/event/ApiAiEvent'
+import {ApiAiHandler} from '../../src/handler/ApiAiHandler'
 
 describe('ApiAiEvent', () => {
 
+  const mockEvent = require('../fixtures/apiai/event.json')
+
   let event: ApiAiEvent
   let assistant
+  let callback
 
   beforeEach(() => {
-    assistant = new apiAiAssistant()
-    assistant.getIntent = jest.fn()
+    callback = jest.fn()
+    // TODO not really cool to use a factory from somewhere else
+    assistant = new ApiAiHandler().createSdkHandler(mockEvent, {}, callback)
 
     event = new ApiAiEvent(assistant)
   })
 
   it('can tell', () => {
-    const spy = jest.spyOn(assistant, 'tell')
-
     event.tell('foo')
 
-    expect(spy).toHaveBeenCalledWith('foo')
+    expect(callback).toHaveBeenCalledWith(undefined, {
+      'contextOut': [],
+      'data': {'google': {'expect_user_response': false, 'is_ssml': false, 'no_input_prompts': []}},
+      'speech': 'foo'
+    })
   })
 
   it('can ask', () => {
-    const spy = jest.spyOn(assistant, 'ask')
-
     event.ask('foo')
 
-    expect(spy).toHaveBeenCalledWith('foo')
+    expect(callback).toHaveBeenCalledWith(undefined, {
+      'contextOut': [{
+        'lifespan': 100,
+        'name': '_actions_on_google_',
+        'parameters': {}
+      }],
+      'data': {'google': {'expect_user_response': true, 'is_ssml': false, 'no_input_prompts': []}},
+      'speech': 'foo'
+    })
   })
 
   it('returns the intent', () => {
-    assistant.getIntent.mockReturnValue('foo')
-
-    expect(event.intent()).toBe('foo')
+    expect(event.intent()).toBe('default')
   })
 })

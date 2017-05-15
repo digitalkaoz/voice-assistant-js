@@ -1,108 +1,92 @@
 import {AlexaEvent} from '../../src/event/AlexaEvent'
 import {AlexaHandler} from '../../src/handler/AlexaHandler'
+import {AlexaSdk, IEvent} from '../../typings'
 
 import {Example} from '../fixtures/mapping'
 
 describe('AlexaHandler', () => {
-  const rawEvent = require('../fixtures/alexa/event.json')
-  const context = require('../fixtures/alexa/context.json')
 
-  const handle = (rawEvent, context, callback) => {
-    const handler = new AlexaHandler()
-    const sdk = handler.createSdkHandler(rawEvent, context, callback)
+  let event: IEvent
 
-    return handler.handle(new AlexaEvent(sdk), new Example())
+  const handle = () => {
+    return new AlexaHandler().handle(event, new Example())
   }
 
+  beforeEach(() => {
+    event = new AlexaEvent({} as AlexaSdk)
+  })
+
   it('can tell', () => {
-    const callback = jest.fn()
+    const spy = jest.spyOn(event, 'tell').mockReturnThis()
+    jest.spyOn(event, 'intent').mockReturnValue('tell')
 
-    rawEvent.request.intent.name = 'tell'
-    context.succeed = callback
+    handle()
 
-    handle(rawEvent, context, callback)
-
-    expect(callback).toHaveBeenCalledWith({
-      response: {
-        outputSpeech: {
-          ssml: '<speak> foo </speak>',
-          type: 'SSML'
-        },
-        shouldEndSession: true
-      },
-      sessionAttributes: {},
-      version: '1.0'
-    })
+    expect(spy).toHaveBeenCalledWith('foo')
   })
 
   it('can ask', () => {
-    const callback = jest.fn()
+    const spy = jest.spyOn(event, 'ask').mockReturnThis()
+    jest.spyOn(event, 'intent').mockReturnValue('ask')
 
-    rawEvent.request.intent.name = 'ask'
-    context.succeed = callback
+    handle()
 
-    handle(rawEvent, context, callback)
+    expect(spy).toHaveBeenCalledWith('foo')
+  })
 
-    expect(callback).toHaveBeenCalledWith({
-      response: {
-        outputSpeech: {
-          ssml: '<speak> foo </speak>',
-          type: 'SSML'
-        },
-        shouldEndSession: false
-      },
-      sessionAttributes: {},
-      version: '1.0'
-    })
+  it('can delegate', () => {
+    const spy = jest.spyOn(event, 'delegate').mockReturnThis()
+    jest.spyOn(event, 'intent').mockReturnValue('delegate')
+
+    handle()
+
+    expect(spy).toHaveBeenCalledWith('askCard')
   })
 
   it('can tell with card', () => {
-    const callback = jest.fn()
+    const spy = jest.spyOn(event, 'tellWithCard').mockReturnThis()
+    jest.spyOn(event, 'intent').mockReturnValue('tellCard')
 
-    rawEvent.request.intent.name = 'tellCard'
-    context.succeed = callback
+    handle()
 
-    handle(rawEvent, context, callback)
-
-    expect(callback).toHaveBeenCalledWith({
-      response: {
-        card: {
-          image: {largeImageUrl: 'http://large', smallImageUrl: 'http://small'},
-          text: 'content',
-          title: 'title',
-          type: 'Standard'
-        },
-        outputSpeech: {ssml: '<speak> speech </speak>', type: 'SSML'},
-        shouldEndSession: true
-      },
-      sessionAttributes: {},
-      version: '1.0'
+    expect(spy).toHaveBeenCalledWith('speech', {
+      'content': 'content',
+      'image': {'largeImageUrl': 'http://large', 'smallImageUrl': 'http://small'},
+      'title': 'title',
+      'type': 'Simple'
     })
   })
 
   it('can ask with card', () => {
-    const callback = jest.fn()
+    const spy = jest.spyOn(event, 'askWithCard').mockReturnThis()
+    jest.spyOn(event, 'intent').mockReturnValue('askCard')
 
-    rawEvent.request.intent.name = 'askCard'
-    context.succeed = callback
+    handle()
 
-    handle(rawEvent, context, callback)
-
-    expect(callback).toHaveBeenCalledWith({
-      response: {
-        card: {
-          image: {largeImageUrl: 'http://large', smallImageUrl: 'http://small'},
-          text: 'content',
-          title: 'title',
-          type: 'Standard'
-        },
-        outputSpeech: {ssml: '<speak> speech </speak>', type: 'SSML'},
-        reprompt: {outputSpeech: {ssml: '<speak> reprompt </speak>', type: 'SSML'}},
-        shouldEndSession: false
-      },
-      sessionAttributes: {},
-      version: '1.0'
+    expect(spy).toHaveBeenCalledWith('speech', 'reprompt', {
+      'content': 'content',
+      'image': {'largeImageUrl': 'http://large', 'smallImageUrl': 'http://small'},
+      'title': 'title',
+      'type': 'Simple'
     })
+  })
+
+  it('can tell with link account card', () => {
+    const spy = jest.spyOn(event, 'tellWithLinkAccountCard').mockReturnThis()
+    jest.spyOn(event, 'intent').mockReturnValue('tellLinkAccountCard')
+
+    handle()
+
+    expect(spy).toHaveBeenCalledWith('speech')
+  })
+
+  it('can ask with link account card', () => {
+    const spy = jest.spyOn(event, 'askWithLinkAccountCard').mockReturnThis()
+    jest.spyOn(event, 'intent').mockReturnValue('askLinkAccountCard')
+
+    handle()
+
+    expect(spy).toHaveBeenCalledWith('speech')
   })
 
 })
