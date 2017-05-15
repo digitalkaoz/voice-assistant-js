@@ -7,86 +7,18 @@ import {Example} from '../fixtures/mapping'
 describe('AlexaHandler', () => {
 
   let event: IEvent
-
-  const handle = () => {
-    return new AlexaHandler().handle(event, new Example())
-  }
+  const api = new Example()
 
   beforeEach(() => {
     event = new AlexaEvent({} as AlexaSdk)
   })
 
-  it('can tell', () => {
-    const spy = jest.spyOn(event, 'tell').mockReturnThis()
-    jest.spyOn(event, 'intent').mockReturnValue('tell')
-
-    handle()
-
-    expect(spy).toHaveBeenCalledWith('foo')
-  })
-
-  it('can ask', () => {
-    const spy = jest.spyOn(event, 'ask').mockReturnThis()
+  it('delegates to the correct api', () => {
+    const spy = jest.spyOn(api, 'ask').mockReturnThis()
     jest.spyOn(event, 'intent').mockReturnValue('ask')
 
-    handle()
+    new AlexaHandler().handle(event, api)
 
-    expect(spy).toHaveBeenCalledWith('foo')
+    expect(spy).toHaveBeenCalledWith(event)
   })
-
-  it('can delegate', () => {
-    const spy = jest.spyOn(event, 'delegate').mockReturnThis()
-    jest.spyOn(event, 'intent').mockReturnValue('delegate')
-
-    handle()
-
-    expect(spy).toHaveBeenCalledWith('askCard')
-  })
-
-  it('can tell with card', () => {
-    const spy = jest.spyOn(event, 'tellWithCard').mockReturnThis()
-    jest.spyOn(event, 'intent').mockReturnValue('tellCard')
-
-    handle()
-
-    expect(spy).toHaveBeenCalledWith('speech', {
-      'content': 'content',
-      'image': {'largeImageUrl': 'http://large', 'smallImageUrl': 'http://small'},
-      'title': 'title',
-      'type': 'Simple'
-    })
-  })
-
-  it('can ask with card', () => {
-    const spy = jest.spyOn(event, 'askWithCard').mockReturnThis()
-    jest.spyOn(event, 'intent').mockReturnValue('askCard')
-
-    handle()
-
-    expect(spy).toHaveBeenCalledWith('speech', 'reprompt', {
-      'content': 'content',
-      'image': {'largeImageUrl': 'http://large', 'smallImageUrl': 'http://small'},
-      'title': 'title',
-      'type': 'Simple'
-    })
-  })
-
-  it('can tell with link account card', () => {
-    const spy = jest.spyOn(event, 'tellWithLinkAccountCard').mockReturnThis()
-    jest.spyOn(event, 'intent').mockReturnValue('tellLinkAccountCard')
-
-    handle()
-
-    expect(spy).toHaveBeenCalledWith('speech')
-  })
-
-  it('can ask with link account card', () => {
-    const spy = jest.spyOn(event, 'askWithLinkAccountCard').mockReturnThis()
-    jest.spyOn(event, 'intent').mockReturnValue('askLinkAccountCard')
-
-    handle()
-
-    expect(spy).toHaveBeenCalledWith('speech')
-  })
-
 })

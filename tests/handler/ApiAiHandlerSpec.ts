@@ -6,31 +6,18 @@ import {Example} from '../fixtures/mapping'
 describe('ApiAiHandler', () => {
 
   let event: IEvent
-
-  const handle = () => {
-    return new ApiAiHandler().handle(event, new Example())
-  }
+  const api = new Example()
 
   beforeEach(() => {
     event = new ApiAiEvent({})
   })
 
-  it('can tell', () => {
-    const spy = jest.spyOn(event, 'tell').mockReturnThis()
-    jest.spyOn(event, 'intent').mockReturnValue('tell')
-
-    handle()
-
-    expect(spy).toHaveBeenCalledWith('foo')
-  })
-
-  it('can ask', () => {
-    const spy = jest.spyOn(event, 'ask').mockReturnThis()
+  it('delegates to the correct api', () => {
+    const spy = jest.spyOn(api, 'ask').mockReturnThis()
     jest.spyOn(event, 'intent').mockReturnValue('ask')
 
-    handle()
+    new ApiAiHandler().handle(event, api)
 
-    expect(spy).toHaveBeenCalledWith('foo')
+    expect(spy).toHaveBeenCalledWith(event)
   })
-
 })

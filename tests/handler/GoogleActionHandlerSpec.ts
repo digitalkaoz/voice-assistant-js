@@ -4,31 +4,20 @@ import {IEvent} from '../../typings'
 import {Example} from '../fixtures/mapping'
 
 describe('GoogleActionHandler', () => {
-  let event: IEvent
 
-  const handle = () => {
-    return new GoogleActionHandler().handle(event, new Example())
-  }
+  let event: IEvent
+  const api = new Example()
 
   beforeEach(() => {
     event = new GoogleActionEvent({})
   })
 
-  it('can tell', () => {
-    const spy = jest.spyOn(event, 'tell').mockReturnThis()
-    jest.spyOn(event, 'intent').mockReturnValue('tell')
-
-    handle()
-
-    expect(spy).toHaveBeenCalledWith('foo')
-  })
-
-  it('can ask', () => {
-    const spy = jest.spyOn(event, 'ask').mockReturnThis()
+  it('delegates to the correct api', () => {
+    const spy = jest.spyOn(api, 'ask').mockReturnThis()
     jest.spyOn(event, 'intent').mockReturnValue('ask')
 
-    handle()
+    new GoogleActionHandler().handle(event, api)
 
-    expect(spy).toHaveBeenCalledWith('foo')
+    expect(spy).toHaveBeenCalledWith(event)
   })
 })
