@@ -3,29 +3,31 @@ import { IApiMapping, IFunction } from '../typings'
 import { DefaultApi } from './api/DefaultApi'
 import { LamdaFunction } from './function/LamdaFunction'
 
-export class Container extends TSDI {
+export class Container {
 
-  constructor(mapping: IApiMapping) {
-    super()
+  public static create(mapping: IApiMapping): TSDI {
+    const container = new TSDI()
+    container.enableComponentScanner()
 
-    this.enableComponentScanner()
+    this.injectApis(container, mapping)
 
-    this.injectApis(mapping)
+    return container
   }
 
-  private injectApis(mapping: IApiMapping): void {
-    this.register(DefaultApi, 'default')
+  public static injectApis(container: TSDI, mapping: IApiMapping): void {
+    container.register(DefaultApi, 'default')
 
     for (const key in mapping) {
       if (mapping.hasOwnProperty(key)) {
-        this.register(mapping[key], key)
+        container.register(mapping[key], key)
       }
     }
   }
 }
 
 export function lambda(mapping: IApiMapping) {
-  const lambda = new Container(mapping).get<IFunction>(LamdaFunction)
+  const container = Container.create(mapping)
+  const lambda = container.get<IFunction>(LamdaFunction)
 
   return lambda.invoke.bind(lambda)
 }

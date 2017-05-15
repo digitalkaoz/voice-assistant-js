@@ -1,13 +1,9 @@
 import * as express from 'express'
-import { Handler } from './Handler'
+import {Handler} from './Handler'
 
 export abstract class GoogleHandler extends Handler {
 
-  // TODO should but wont work
-  /* @Require('express')
-   private static app: express.Express */
-
-  static createAssistantArguments(event: any, callback: (error: number, data?: any) => any): Object {
+  protected createAssistantArguments (event: any, callback: (error: number, data?: any) => any): Object {
     const app = express()
 
     app.request.body = event
@@ -18,6 +14,6 @@ export abstract class GoogleHandler extends Handler {
       return callback(error, data) as express.Response // TODO this maybe lambda only, check on google-cloud-functions
     }
 
-    return { request: app.request, response: app.response }
+    return {request: app.request, response: app.response}
   }
 }

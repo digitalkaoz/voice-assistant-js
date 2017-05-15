@@ -16,7 +16,8 @@
     "forceConsistentCasingInFileNames": true,
     "types": [
       "node",
-      "tsdi"
+      "tsdi",
+      "jest"
     ]
   },
   "exclude": [

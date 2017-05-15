@@ -17,7 +17,7 @@
     "timestamp": "2017-05-06T18:08:14Z",
     "locale": "de-DE",
     "intent": {
-      "name": "PauseIntent",
+      "name": "tell",
       "slots": {
         "Room": {
           "name": "Room",

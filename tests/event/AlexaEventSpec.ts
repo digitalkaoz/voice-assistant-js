@@ -1,5 +1,5 @@
-import { AlexaEvent } from '../../src/event/AlexaEvent'
-import { LambdaHandler } from 'alexa-sdk/lib/alexa.js'
+import {LambdaHandler} from 'alexa-sdk/lib/alexa.js'
+import {AlexaEvent} from '../../src/event/AlexaEvent'
 
 describe('AlexaEvent', () => {
 
@@ -29,11 +29,31 @@ describe('AlexaEvent', () => {
 
     event.ask('foo')
 
-    expect(spy).toHaveBeenCalledWith(':listen', 'foo')
+    expect(spy).toHaveBeenCalledWith(':ask', 'foo')
   })
 
   it('returns the intent', () => {
-    expect(event.intent()).toBe('PauseIntent')
+    expect(event.intent()).toBe('tell')
+  })
+
+  it('can ask with card', () => {
+    const spy = jest.spyOn(handler, 'emit').mockReturnThis()
+
+    event.askWithCard('foo', 'fooBar', {
+      type: 'Standard',
+      title: 'cardTitle',
+      content: 'cardContent',
+      image: {smallImageUrl: 'http://small', largeImageUrl: 'http://large'}
+    })
+
+    expect(spy).toHaveBeenCalledWith(':askWithCard',
+      'foo',
+      'fooBar',
+      'cardTitle',
+      'cardContent', {
+        'largeImageUrl': 'http://large',
+        'smallImageUrl': 'http://small'
+      })
   })
 
 })

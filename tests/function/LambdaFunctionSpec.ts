@@ -1,6 +1,5 @@
 import {Container, lambda} from '../../src/Container'
 import {LamdaFunction} from '../../src/function/LamdaFunction'
-import {AutoDetectHandler} from '../../src/handler/AutoDetectHandler'
 
 import mapping from '../fixtures/mapping'
 
@@ -9,9 +8,7 @@ const context = require('../fixtures/alexa/context.json')
 
 describe('LamdaFunction', () => {
   it('calls the given IApi', () => {
-    const c = new Container(mapping)
-
-    const lamda = new LamdaFunction(new AutoDetectHandler(c))
+    const lamda = new LamdaFunction(Container.create(mapping))
     const callback = jest.fn()
     context.succeed = callback
 
@@ -28,11 +25,9 @@ describe('LamdaFunction', () => {
       sessionAttributes: {},
       version: '1.0'
     })
-
-    c.close()
   })
 
-  /*it('works with the shorthand function', () => {
+  it('works with the shorthand function', () => {
     const callback = jest.fn()
     context.succeed = callback
 
@@ -49,5 +44,5 @@ describe('LamdaFunction', () => {
       sessionAttributes: {},
       version: '1.0'
     })
-  })*/
+  })
 })

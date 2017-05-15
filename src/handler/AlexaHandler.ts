@@ -1,17 +1,14 @@
 import {handler} from 'alexa-sdk'
-import {Component} from 'tsdi'
-import {AlexaSdk, IEvent} from '../../typings'
-import {AlexaEvent} from '../event/AlexaEvent'
+import {Component, Factory} from 'tsdi'
+import {AlexaSdk, IHandler} from '../../typings'
 import {Handler} from './Handler'
 
 @Component()
-export class AlexaHandler extends Handler {
+export class AlexaHandler extends Handler implements IHandler {
 
-  public static event (event, context, callback): IEvent {
-    return new AlexaEvent(handler(event, context) as AlexaSdk)
+  // @Factory()
+  public createSdkHandler (event: any, context: any, callback: () => any): AlexaSdk {
+    return handler(event, context) as AlexaSdk
   }
 
-  protected createEvent (event, context, callback): IEvent {
-    return AlexaHandler.event(event, context, callback)
-  }
 }

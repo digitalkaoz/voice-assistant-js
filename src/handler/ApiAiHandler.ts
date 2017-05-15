@@ -1,19 +1,15 @@
 import {ApiAiAssistant} from 'actions-on-google'
-import {Component} from 'tsdi'
-import {IEvent} from '../../typings'
-import {ApiAiEvent} from '../event/ApiAiEvent'
+import {Component, Factory, Inject, TSDI} from 'tsdi'
+import {IHandler} from '../../typings'
 import {GoogleHandler} from './GoogleHandler'
 
 @Component()
-export class ApiAiHandler extends GoogleHandler {
+export class ApiAiHandler extends GoogleHandler implements IHandler {
 
-  public static event (event, context, callback): IEvent {
+  // @Factory({name: 'api-ai'})
+  public createSdkHandler (event: any, context: any, callback: () => any): ApiAiAssistant {
     const args = this.createAssistantArguments(event, callback)
 
-    return new ApiAiEvent(new ApiAiAssistant(args))
-  }
-
-  protected createEvent (event, context, callback): IEvent {
-    return ApiAiHandler.event(event, context, callback)
+    return new ApiAiAssistant(args)
   }
 }
