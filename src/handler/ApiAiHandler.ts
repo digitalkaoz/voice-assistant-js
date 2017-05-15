@@ -1,5 +1,5 @@
 import {ApiAiAssistant} from 'actions-on-google'
-import {Component, Factory, Inject, TSDI} from 'tsdi'
+import {Component} from 'tsdi'
 import {IHandler} from '../../typings'
 import {GoogleHandler} from './GoogleHandler'
 

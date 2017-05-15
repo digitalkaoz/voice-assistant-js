@@ -1,7 +1,7 @@
 import {ApiAiAssistent} from 'actions-on-google/api-ai-assistant.js'
 import {Card} from 'alexa-sdk'
-import {IEvent} from '../../typings'
 import {Component, Inject} from 'tsdi'
+import {IEvent} from '../../typings'
 
 @Component()
 export class ApiAiEvent implements IEvent {

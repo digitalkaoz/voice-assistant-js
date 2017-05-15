@@ -1,4 +1,4 @@
-import { IApi, IEvent } from '../../typings'
+import {IApi, IEvent} from '../../typings'
 
 export class DefaultApi implements IApi {
 

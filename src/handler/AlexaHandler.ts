@@ -1,5 +1,5 @@
 import {handler} from 'alexa-sdk'
-import {Component, Factory} from 'tsdi'
+import {Component} from 'tsdi'
 import {AlexaSdk, IHandler} from '../../typings'
 import {Handler} from './Handler'
 
