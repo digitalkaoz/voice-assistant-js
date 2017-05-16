@@ -144,6 +144,21 @@ describe('AlexaEvent', () => {
   })
 
   it('can ask for form field values', () => {
+    event.askFormField('address', 'where do you want to go', null, 'transportation')
+
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        directives: [{slotToElicit: 'address', type: 'Dialog.ElicitSlot', updatedIntent: 'transportation'}],
+        outputSpeech: {ssml: '<speak> where do you want to go </speak>', type: 'SSML'},
+        reprompt: {outputSpeech: {ssml: '<speak> where do you want to go </speak>', type: 'SSML'}},
+        shouldEndSession: false
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
+  })
+
+  it('can ask for form field values with cards', () => {
     event.askFormField('address', 'where do you want to go', null, 'transportation', defaultCard)
 
     expect(callback).toHaveBeenCalledWith({
@@ -160,6 +175,21 @@ describe('AlexaEvent', () => {
   })
 
   it('can confirm form field values', () => {
+    event.confirmFormField('address', 'where do you want to go', null, 'transportation')
+
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        directives: [{slotToConfirm: 'address', type: 'Dialog.ConfirmSlot', updatedIntent: 'transportation'}],
+        outputSpeech: {ssml: '<speak> where do you want to go </speak>', type: 'SSML'},
+        reprompt: {outputSpeech: {ssml: '<speak> where do you want to go </speak>', type: 'SSML'}},
+        shouldEndSession: false
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
+  })
+
+  it('can confirm form field values with cards', () => {
     event.confirmFormField('address', 'where do you want to go', null, 'transportation', defaultCard)
 
     expect(callback).toHaveBeenCalledWith({
@@ -175,7 +205,25 @@ describe('AlexaEvent', () => {
     })
   })
 
-  it('can submit forms ', () => {
+  it('can submit forms', () => {
+    const invalidCB = jest.fn()
+    const confirmedCB = jest.fn()
+
+    event.submitForm('submit form?', invalidCB, confirmedCB, null, 'transportation')
+
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        directives: [{type: 'Dialog.ConfirmIntent', updatedIntent: 'transportation'}],
+        outputSpeech: {ssml: '<speak> submit form? </speak>', type: 'SSML'},
+        reprompt: {outputSpeech: {ssml: '<speak> submit form? </speak>', type: 'SSML'}},
+        shouldEndSession: false
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
+  })
+
+  it('can submit forms with cards', () => {
     const invalidCB = jest.fn()
     const confirmedCB = jest.fn()
 
