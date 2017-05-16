@@ -1,4 +1,4 @@
-import {handler} from 'alexa-sdk'
+import {Card, handler} from 'alexa-sdk'
 import {AlexaEvent} from '../../src/event/AlexaEvent'
 import {AlexaSdk} from '../../typings'
 
@@ -6,6 +6,20 @@ describe('AlexaEvent', () => {
 
   const mockEvent = require('../fixtures/alexa/event.json')
   let context = require('../fixtures/alexa/context.json')
+
+  const defaultCard: Card = {
+    image: {smallImageUrl: 'http://small', largeImageUrl: 'http://large'},
+    type: 'Standard',
+    title: 'cardTitle',
+    content: 'cardContent'
+  }
+
+  const defaultCardResponse = {
+    image: {smallImageUrl: 'http://small', largeImageUrl: 'http://large'},
+    type: 'Standard',
+    title: 'cardTitle',
+    text: 'cardContent'
+  }
 
   let event: AlexaEvent
   let callback: () => any
@@ -43,6 +57,7 @@ describe('AlexaEvent', () => {
           ssml: '<speak> foo </speak>',
           type: 'SSML'
         },
+        reprompt: {outputSpeech: {ssml: '<speak> foo </speak>', type: 'SSML'}},
         shouldEndSession: false
       },
       sessionAttributes: {},
@@ -68,21 +83,11 @@ describe('AlexaEvent', () => {
   })
 
   it('can ask with card', () => {
-    event.askWithCard('foo', 'fooBar', {
-      type: 'Standard',
-      title: 'cardTitle',
-      content: 'cardContent',
-      image: {smallImageUrl: 'http://small', largeImageUrl: 'http://large'}
-    })
+    event.ask('foo', 'fooBar', defaultCard)
 
     expect(callback).toHaveBeenCalledWith({
       response: {
-        card: {
-          image: {largeImageUrl: 'http://large', smallImageUrl: 'http://small'},
-          text: 'cardContent',
-          title: 'cardTitle',
-          type: 'Standard'
-        },
+        card: defaultCardResponse,
         outputSpeech: {ssml: '<speak> foo </speak>', type: 'SSML'},
         reprompt: {outputSpeech: {ssml: '<speak> fooBar </speak>', type: 'SSML'}},
         shouldEndSession: false
@@ -93,21 +98,11 @@ describe('AlexaEvent', () => {
   })
 
   it('can tell with card', () => {
-    event.tellWithCard('foo', {
-      type: 'Standard',
-      title: 'cardTitle',
-      content: 'cardContent',
-      image: {smallImageUrl: 'http://small', largeImageUrl: 'http://large'}
-    })
+    event.tell('foo', defaultCard)
 
     expect(callback).toHaveBeenCalledWith({
       response: {
-        card: {
-          image: {largeImageUrl: 'http://large', smallImageUrl: 'http://small'},
-          text: 'cardContent',
-          title: 'cardTitle',
-          type: 'Standard'
-        },
+        card: defaultCardResponse,
         outputSpeech: {ssml: '<speak> foo </speak>', type: 'SSML'},
         shouldEndSession: true
       },
@@ -145,6 +140,66 @@ describe('AlexaEvent', () => {
       },
       sessionAttributes: {},
       version: '1.0'
+    })
+  })
+
+  it('can ask for form field values', () => {
+    event.askFormField('address', 'where do you want to go', null, 'transportation', defaultCard)
+
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        card: defaultCardResponse,
+        directives: [{slotToElicit: 'address', type: 'Dialog.ElicitSlot', updatedIntent: 'transportation'}],
+        outputSpeech: {ssml: '<speak> where do you want to go </speak>', type: 'SSML'},
+        reprompt: {outputSpeech: {ssml: '<speak> where do you want to go </speak>', type: 'SSML'}},
+        shouldEndSession: false
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
+  })
+
+  it('can confirm form field values', () => {
+    event.confirmFormField('address', 'where do you want to go', null, 'transportation', defaultCard)
+
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        card: defaultCardResponse,
+        directives: [{slotToConfirm: 'address', type: 'Dialog.ConfirmSlot', updatedIntent: 'transportation'}],
+        outputSpeech: {ssml: '<speak> where do you want to go </speak>', type: 'SSML'},
+        reprompt: {outputSpeech: {ssml: '<speak> where do you want to go </speak>', type: 'SSML'}},
+        shouldEndSession: false
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
+  })
+
+  it('can submit forms ', () => {
+    const invalidCB = jest.fn()
+    const confirmedCB = jest.fn()
+
+    event.submitForm('submit form?', invalidCB, confirmedCB, null, 'transportation', defaultCard)
+
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        card: defaultCardResponse,
+        directives: [{type: 'Dialog.ConfirmIntent', updatedIntent: 'transportation'}],
+        outputSpeech: {ssml: '<speak> submit form? </speak>', type: 'SSML'},
+        reprompt: {outputSpeech: {ssml: '<speak> submit form? </speak>', type: 'SSML'}},
+        shouldEndSession: false
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
+  })
+
+  it('can return parameters', () => {
+    expect(event.getParameters()).toEqual({
+      Room: {
+        name: 'Room',
+        value: 'Kitchen'
+      }
     })
   })
 

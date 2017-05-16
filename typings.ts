@@ -8,14 +8,16 @@ export declare interface IApiMapping {
 export declare interface IApi {}
 
 export declare interface IEvent {
-  tell(text: string)
   intent(): string
-  ask(text: string)
   delegate (intent: string)
-  tellWithCard (text: string, card: Card)
-  askWithCard (text: string, reprompt: string, card: Card)
+  tell(text: string, card?: Card)
+  ask(text: string, reprompt?: string, card?: Card)
   tellWithLinkAccountCard (text: string)
   askWithLinkAccountCard (text: string)
+  askFormField(field: string, text: string, reprompt?: string, delegate?: string, card?: Card)
+  confirmFormField(field: string, text: string, reprompt?: string, delegate?: string, card?: Card)
+  submitForm(text: string, invalidCallback: Function, unconfirmedCallback: Function, reprompt?: string, delegate?: string, card?: Card)
+  getParameters(): Object
 }
 
 export declare interface IHandler {

@@ -1,6 +1,4 @@
 import {lambda} from '../../src/Container'
-import {LamdaFunction} from '../../src/function/LamdaFunction'
-
 import mapping from '../fixtures/mapping'
 
 describe('LamdaFunction', () => {

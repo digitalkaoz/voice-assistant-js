@@ -6,35 +6,43 @@ export class GoogleActionEvent implements IEvent {
 
   constructor (private assistant: ActionsSdkAssistant) { }
 
-  public tell (text) {
-    return this.assistant.tell(text)
-  }
-
   public intent (): string {
     return this.assistant.getIntent()
   }
 
-  public ask (text) {
-    return this.assistant.ask(text)
+  public tell (text, card?: Card) {
+    this.assistant.tell(text)
   }
 
-  delegate (intent: string) {
+  public ask (text, reprompt?: string, card?: Card) {
+    this.assistant.ask(text)
+  }
+
+  public delegate (intent: string) {
     throw new Error('not implemented')
   }
 
-  tellWithCard (text: string, card: Card) {
+  public tellWithLinkAccountCard (text: string) {
     throw new Error('not implemented')
   }
 
-  askWithCard (text: string, reprompt: string, card: Card) {
+  public askWithLinkAccountCard (text: string) {
     throw new Error('not implemented')
   }
 
-  tellWithLinkAccountCard (text: string) {
+  askFormField (field: string, text: string, reprompt?: string, delegate?: string, card?: Card) {
     throw new Error('not implemented')
   }
 
-  askWithLinkAccountCard (text: string) {
+  confirmFormField (field: string, text: string, reprompt?: string, delegate?: string, card?: Card) {
+    throw new Error('not implemented')
+  }
+
+  submitForm (text: string, invalidCallback: Function, unconfirmedCallback: Function, reprompt?: string, delegate?: string, card?: Card) {
+    throw new Error('not implemented')
+  }
+
+  getParameters (): Object {
     throw new Error('not implemented')
   }
 

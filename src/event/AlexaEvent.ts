@@ -9,24 +9,24 @@ export class AlexaEvent implements IEvent {
     return this.handler._event.request.intent.name
   }
 
-  public tell (text: string) {
-    this.handler.emit(':tell', text)
-  }
-
-  public ask (text: string) {
-    this.handler.emit(':ask', text)
-  }
-
   public delegate (intent: string) {
     this.handler.emit(':delegate', intent)
   }
 
-  public tellWithCard (text: string, card: Card) {
-    this.handler.emit(':tellWithCard', text, card.title, card.content, card.image)
+  public tell (text: string, card?: Card) {
+    if (card) {
+      this.handler.emit(':tellWithCard', text, card.title, card.content, card.image)
+    } else {
+      this.handler.emit(':tell', text)
+    }
   }
 
-  public askWithCard (text: string, reprompt: string, card: Card) {
-    this.handler.emit(':askWithCard', text, reprompt, card.title, card.content, card.image)
+  public ask (text: string, reprompt?: string, card?: Card) {
+    if (card) {
+      this.handler.emit(':askWithCard', text, reprompt, card.title, card.content, card.image)
+    } else {
+      this.handler.emit(':ask', text, reprompt || text)
+    }
   }
 
   public tellWithLinkAccountCard (text: string) {
@@ -37,15 +37,45 @@ export class AlexaEvent implements IEvent {
     this.handler.emit(':askWithLinkAccountCard', text)
   }
 
+  public askFormField (field: string, text: string, reprompt?: string, delegate?: string, card?: Card) {
+    if (card) {
+      this.handler.emit(':elicitSlotWithCard', field, text, reprompt || text, card.title, card.content, delegate, card.image)
+    } else {
+      this.handler.emit(':elicitSlot', field, text, reprompt || text, delegate)
+    }
+  }
+
+  public confirmFormField (field: string, text: string, reprompt?: string, delegate?: string, card?: Card) {
+    if (card) {
+      this.handler.emit(':confirmSlotWithCard', field, text, reprompt || text, card.title, card.content, delegate, card.image)
+    } else {
+      this.handler.emit(':confirmSlot', field, text, reprompt || text, delegate)
+    }
+  }
+
+  public submitForm (text: string, invalidCallback: Function, confirmedCallback: Function, reprompt?: string, delegate?: string, card?: Card) {
+    const intent = this.handler._event.request.intent
+
+    if (intent.confirmationStatus === 'CONFIRMED') {
+      return confirmedCallback(this)
+    }
+
+    if (intent.confirmationStatus === 'DENIED') {
+      return invalidCallback(this)
+    }
+
+    if (card) {
+      this.handler.emit(':confirmIntentWithCard', text, reprompt || text, card.title, card.content, delegate, card.image)
+    } else {
+      this.handler.emit(':confirmIntent', text, reprompt || text, delegate)
+    }
+  }
+
+  public getParameters (): Object {
+    return this.handler._event.request.intent.slots
+  }
+
   /*
    this.emit(':tellWithPermissionCard', speechOutput, permissionArray);
-
-   this.emit(':elicitSlot', slotToElicit, speechOutput, repromptSpeech, updatedIntent);
-   this.emit(':elicitSlotWithCard', slotToElicit, speechOutput, repromptSpeech, cardTitle, cardContent, updatedIntent, imageObj);
-
-   this.emit(':confirmSlot', slotToConfirm, speechOutput, repromptSpeech, updatedIntent);
-   this.emit(':confirmSlotWithCard', slotToConfirm, speechOutput, repromptSpeech, cardTitle, cardContent, updatedIntent, imageObj);
-   this.emit(':confirmIntent', speechOutput, repromptSpeech, updatedIntent);
-   this.emit(':confirmIntentWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, updatedIntent, imageObj);
    */
 }

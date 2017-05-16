@@ -9,7 +9,7 @@ export class Example implements IApi {
   }
 
   public tellCard (event: IEvent) {
-    event.tellWithCard('speech', {
+    event.tell('speech', {
       type: 'Simple',
       title: 'title',
       content: 'content',
@@ -21,7 +21,7 @@ export class Example implements IApi {
   }
 
   public askCard (event: IEvent) {
-    event.askWithCard('speech', 'reprompt', {
+    event.ask('speech', 'reprompt', {
       type: 'Simple',
       title: 'title',
       content: 'content',
