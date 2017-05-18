@@ -53,6 +53,7 @@
     "transform": {
       "\\.(ts)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
+    "collectCoverageFrom" : ["src/**.{ts}"],
     "collectCoverage": false,
     "coverageDirectory": "coverage",
     "mapCoverage": true,

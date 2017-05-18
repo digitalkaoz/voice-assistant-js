@@ -242,6 +242,34 @@ describe('AlexaEvent', () => {
     })
   })
 
+  it('calls confirmedCallback on submitForm when form is already confirmed', () => {
+    const invalidCB = jest.fn()
+    const confirmedCB = jest.fn()
+    callback = jest.fn()
+    context.succeed = callback
+    mockEvent.request.intent.confirmationStatus = 'CONFIRMED'
+
+    event = new AlexaEvent(handler(mockEvent, context, callback) as AlexaSdk)
+
+    event.submitForm('submit form?', invalidCB, confirmedCB, null, 'transportation', defaultCard)
+
+    expect(confirmedCB).toHaveBeenCalledWith(event)
+  })
+
+  it('calls invalidCallback on submitForm when form is invalid', () => {
+    const invalidCB = jest.fn()
+    const confirmedCB = jest.fn()
+    callback = jest.fn()
+    context.succeed = callback
+    mockEvent.request.intent.confirmationStatus = 'DENIED'
+
+    event = new AlexaEvent(handler(mockEvent, context, callback) as AlexaSdk)
+
+    event.submitForm('submit form?', invalidCB, confirmedCB, null, 'transportation', defaultCard)
+
+    expect(invalidCB).toHaveBeenCalledWith(event)
+  })
+
   it('can return parameters', () => {
     expect(event.getParameters()).toEqual({
       Room: {
