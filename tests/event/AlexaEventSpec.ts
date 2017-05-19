@@ -48,6 +48,20 @@ describe('AlexaEvent', () => {
     })
   })
 
+  it('can tell with card', () => {
+    event.tell('foo', defaultCard)
+
+    expect(callback).toHaveBeenCalledWith({
+      response: {
+        card: defaultCardResponse,
+        outputSpeech: {ssml: '<speak> foo </speak>', type: 'SSML'},
+        shouldEndSession: true
+      },
+      sessionAttributes: {},
+      version: '1.0'
+    })
+  })
+
   it('can ask', () => {
     event.ask('foo')
 
@@ -58,23 +72,6 @@ describe('AlexaEvent', () => {
           type: 'SSML'
         },
         reprompt: {outputSpeech: {ssml: '<speak> foo </speak>', type: 'SSML'}},
-        shouldEndSession: false
-      },
-      sessionAttributes: {},
-      version: '1.0'
-    })
-  })
-
-  it('returns the intent', () => {
-    expect(event.intent()).toBe('tell')
-  })
-
-  it('can delegate', () => {
-    event.delegate('askCard')
-
-    expect(callback).toHaveBeenCalledWith({
-      response: {
-        directives: [{type: 'Dialog.Delegate', updatedIntent: 'askCard'}],
         shouldEndSession: false
       },
       sessionAttributes: {},
@@ -97,14 +94,21 @@ describe('AlexaEvent', () => {
     })
   })
 
-  it('can tell with card', () => {
-    event.tell('foo', defaultCard)
+  it('returns the intent', () => {
+    expect(event.intent()).toBe('tell')
+  })
+
+  it('returns a parameter', () => {
+    expect(event.getParameter('Room')).toBe('Kitchen')
+  })
+
+  it('can delegate', () => {
+    event.delegate('askCard')
 
     expect(callback).toHaveBeenCalledWith({
       response: {
-        card: defaultCardResponse,
-        outputSpeech: {ssml: '<speak> foo </speak>', type: 'SSML'},
-        shouldEndSession: true
+        directives: [{type: 'Dialog.Delegate', updatedIntent: 'askCard'}],
+        shouldEndSession: false
       },
       sessionAttributes: {},
       version: '1.0'
@@ -271,12 +275,7 @@ describe('AlexaEvent', () => {
   })
 
   it('can return parameters', () => {
-    expect(event.getParameters()).toEqual({
-      Room: {
-        name: 'Room',
-        value: 'Kitchen'
-      }
-    })
+    expect(event.getParameter('Room')).toBe('Kitchen')
   })
 
 })

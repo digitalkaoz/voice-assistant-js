@@ -17,7 +17,7 @@ export declare interface IEvent {
   askFormField(field: string, text: string, reprompt?: string, delegate?: string, card?: Card)
   confirmFormField(field: string, text: string, reprompt?: string, delegate?: string, card?: Card)
   submitForm(text: string, invalidCallback: Function, unconfirmedCallback: Function, reprompt?: string, delegate?: string, card?: Card)
-  getParameters(): Object
+  getParameter(name: string): any
 }
 
 export declare interface IHandler {

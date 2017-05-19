@@ -71,8 +71,8 @@ export class AlexaEvent implements IEvent {
     }
   }
 
-  public getParameters (): Object {
-    return this.handler._event.request.intent.slots
+  public getParameter (name: string): any {
+    return this.handler._event.request.intent.slots[name]['value'] || null
   }
 
   /*
