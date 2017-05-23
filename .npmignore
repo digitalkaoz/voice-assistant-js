@@ -1,7 +1,6 @@
 node_modules/
 *.tgz
-src
-!dist/**
+src/
+!dist/
+!dist/**/
 tests/
-tsconfig.json
-tslint.json
