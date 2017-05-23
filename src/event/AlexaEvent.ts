@@ -13,16 +13,18 @@ export class AlexaEvent implements IEvent {
     this.handler.emit(':delegate', intent)
   }
 
-  public tell (text: string, card?: Card) {
-    if (card) {
+  public tell (text: string, cards?: Array<Card>) {
+    if (cards && cards.length) {
+      const card = cards.shift()
       this.handler.emit(':tellWithCard', text, card.title, card.content, card.image)
     } else {
       this.handler.emit(':tell', text)
     }
   }
 
-  public ask (text: string, reprompt?: string, card?: Card) {
-    if (card) {
+  public ask (text: string, reprompt?: string, cards?: Array<Card>) {
+    if (cards && cards.length) {
+      const card = cards.shift()
       this.handler.emit(':askWithCard', text, reprompt, card.title, card.content, card.image)
     } else {
       this.handler.emit(':ask', text, reprompt || text)
@@ -41,23 +43,25 @@ export class AlexaEvent implements IEvent {
     return this.handler._event.session.user
   }
 
-  public askFormField (field: string, text: string, reprompt?: string, delegate?: string, card?: Card) {
-    if (card) {
+  public askFormField (field: string, text: string, reprompt?: string, delegate?: string, cards?: Array<Card>) {
+    if (cards && cards.length) {
+      const card = cards.shift()
       this.handler.emit(':elicitSlotWithCard', field, text, reprompt || text, card.title, card.content, delegate, card.image)
     } else {
       this.handler.emit(':elicitSlot', field, text, reprompt || text, delegate)
     }
   }
 
-  public confirmFormField (field: string, text: string, reprompt?: string, delegate?: string, card?: Card) {
-    if (card) {
+  public confirmFormField (field: string, text: string, reprompt?: string, delegate?: string, cards?: Array<Card>) {
+    if (cards && cards.length) {
+      const card = cards.shift()
       this.handler.emit(':confirmSlotWithCard', field, text, reprompt || text, card.title, card.content, delegate, card.image)
     } else {
       this.handler.emit(':confirmSlot', field, text, reprompt || text, delegate)
     }
   }
 
-  public submitForm (text: string, invalidCallback: Function, confirmedCallback: Function, reprompt?: string, delegate?: string, card?: Card) {
+  public submitForm (text: string, invalidCallback: Function, confirmedCallback: Function, reprompt?: string, delegate?: string, cards?: Array<Card>) {
     const intent = this.handler._event.request.intent
 
     if (intent.confirmationStatus === 'CONFIRMED') {
@@ -68,7 +72,8 @@ export class AlexaEvent implements IEvent {
       return invalidCallback(this)
     }
 
-    if (card) {
+    if (cards && cards.length) {
+      const card = cards.shift()
       this.handler.emit(':confirmIntentWithCard', text, reprompt || text, card.title, card.content, delegate, card.image)
     } else {
       this.handler.emit(':confirmIntent', text, reprompt || text, delegate)

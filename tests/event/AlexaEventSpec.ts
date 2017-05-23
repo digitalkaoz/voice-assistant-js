@@ -49,7 +49,7 @@ describe('AlexaEvent', () => {
   })
 
   it('can tell with card', () => {
-    event.tell('foo', defaultCard)
+    event.tell('foo', [defaultCard])
 
     expect(callback).toHaveBeenCalledWith({
       response: {
@@ -80,7 +80,7 @@ describe('AlexaEvent', () => {
   })
 
   it('can ask with card', () => {
-    event.ask('foo', 'fooBar', defaultCard)
+    event.ask('foo', 'fooBar', [defaultCard])
 
     expect(callback).toHaveBeenCalledWith({
       response: {
@@ -162,7 +162,7 @@ describe('AlexaEvent', () => {
   })
 
   it('can ask for form field values with cards', () => {
-    event.askFormField('address', 'where do you want to go', null, 'transportation', defaultCard)
+    event.askFormField('address', 'where do you want to go', null, 'transportation', [defaultCard])
 
     expect(callback).toHaveBeenCalledWith({
       response: {
@@ -193,7 +193,7 @@ describe('AlexaEvent', () => {
   })
 
   it('can confirm form field values with cards', () => {
-    event.confirmFormField('address', 'where do you want to go', null, 'transportation', defaultCard)
+    event.confirmFormField('address', 'where do you want to go', null, 'transportation', [defaultCard])
 
     expect(callback).toHaveBeenCalledWith({
       response: {
@@ -230,7 +230,7 @@ describe('AlexaEvent', () => {
     const invalidCB = jest.fn()
     const confirmedCB = jest.fn()
 
-    event.submitForm('submit form?', invalidCB, confirmedCB, null, 'transportation', defaultCard)
+    event.submitForm('submit form?', invalidCB, confirmedCB, null, 'transportation', [defaultCard])
 
     expect(callback).toHaveBeenCalledWith({
       response: {
@@ -254,7 +254,7 @@ describe('AlexaEvent', () => {
 
     event = new AlexaEvent(handler(mockEvent, context, callback) as AlexaSdk)
 
-    event.submitForm('submit form?', invalidCB, confirmedCB, null, 'transportation', defaultCard)
+    event.submitForm('submit form?', invalidCB, confirmedCB, null, 'transportation', [defaultCard])
 
     expect(confirmedCB).toHaveBeenCalledWith(event)
   })
@@ -268,7 +268,7 @@ describe('AlexaEvent', () => {
 
     event = new AlexaEvent(handler(mockEvent, context, callback) as AlexaSdk)
 
-    event.submitForm('submit form?', invalidCB, confirmedCB, null, 'transportation', defaultCard)
+    event.submitForm('submit form?', invalidCB, confirmedCB, null, 'transportation', [defaultCard])
 
     expect(invalidCB).toHaveBeenCalledWith(event)
   })

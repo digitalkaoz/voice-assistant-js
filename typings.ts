@@ -12,20 +12,20 @@ export declare interface IEvent {
 
   delegate (intent: string)
 
-  tell(text: string, card?: Card)
+  tell(text: string, cards?: Array<Card>)
 
-  ask(text: string, reprompt?: string, card?: Card)
+  ask(text: string, reprompt?: string, cards?: Array<Card>)
 
   // tellWithLinkAccountCard (text: string)
   signin (text: string)
 
   isSignedIn(): boolean
 
-  askFormField(field: string, text: string, reprompt?: string, delegate?: string, card?: Card)
+  askFormField(field: string, text: string, reprompt?: string, delegate?: string, cards?: Array<Card>)
 
-  confirmFormField(field: string, text: string, reprompt?: string, delegate?: string, card?: Card)
+  confirmFormField(field: string, text: string, reprompt?: string, delegate?: string, cards?: Array<Card>)
 
-  submitForm(text: string, invalidCallback: Function, unconfirmedCallback: Function, reprompt?: string, delegate?: string, card?: Card)
+  submitForm(text: string, invalidCallback: Function, unconfirmedCallback: Function, reprompt?: string, delegate?: string, cards?: Array<Card>)
 
   getParameter(name: string): any
 }

@@ -36,7 +36,32 @@ describe('ApiAiEvent', () => {
   })
 
   it('can tell with card', () => {
-    event.tell('foo', defaultCard)
+    event.tell('foo', [defaultCard])
+
+    expect(callback).toHaveBeenCalledWith(undefined, {
+      'contextOut': [],
+      'data': {
+        'google': {
+          'expect_user_response': false,
+          'rich_response': {
+            'items': [{'simple_response': {'text_to_speech': 'foo'}}, {
+              'basic_card': {
+                'buttons': [],
+                'formatted_text': 'cardContent',
+                'image': {'accessibility_text': 'image', 'url': 'http://large.com/foo.jpg'},
+                'subtitle': undefined,
+                'title': 'cardTitle'
+              }
+            }], 'link_out_suggestion': undefined, 'suggestions': []
+          }
+        }
+      },
+      'speech': 'foo'
+    })
+  })
+
+  xit('can tell with multiple cards', () => {
+    event.tell('foo', [defaultCard, defaultCard])
 
     expect(callback).toHaveBeenCalledWith(undefined, {
       'contextOut': [],
@@ -75,7 +100,7 @@ describe('ApiAiEvent', () => {
   })
 
   it('can ask with card', () => {
-    event.ask('foo', null, defaultCard)
+    event.ask('foo', null, [defaultCard])
 
     expect(callback).toHaveBeenCalledWith(undefined, {
       'contextOut': [{
@@ -96,6 +121,49 @@ describe('ApiAiEvent', () => {
                 'title': 'cardTitle'
               }
             }], 'link_out_suggestion': undefined, 'suggestions': []
+          }
+        }
+      },
+      'speech': 'foo'
+    })
+  })
+
+  it('can ask with carousel', () => {
+    event.ask('foo', null, [defaultCard, defaultCard])
+
+    expect(callback).toHaveBeenCalledWith(undefined, {
+      'contextOut': [{
+        'lifespan': 100,
+        'name': '_actions_on_google_',
+        'parameters': {}
+      }],
+      'data': {
+        'google': {
+          'expect_user_response': true,
+          'rich_response': {
+            'items': [{'simple_response': {'text_to_speech': 'foo'}}],
+            'link_out_suggestion': undefined,
+            'suggestions': []
+          },
+          'system_intent': {
+            'intent': 'actions.intent.OPTION',
+            'spec': {
+              'option_value_spec': {
+                'carousel_select': {
+                  'items': [{
+                    'description': 'cardContent',
+                    'image': {'accessibility_text': 'image', 'url': 'http://large.com/foo.jpg'},
+                    'option_info': { key: 'cardTitle', synonyms: [] },
+                    'title': 'cardTitle'
+                  }, {
+                    'description': 'cardContent',
+                    'image': {'accessibility_text': 'image', 'url': 'http://large.com/foo.jpg'},
+                    'option_info': { key: 'cardTitle', synonyms: [] },
+                    'title': 'cardTitle'
+                  }]
+                }
+              }
+            }
           }
         }
       },

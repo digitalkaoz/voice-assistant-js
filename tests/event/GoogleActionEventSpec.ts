@@ -35,7 +35,28 @@ describe('GoogleActionEvent', () => {
   })
 
   it('can tell with card', () => {
-    event.tell('foo', defaultCard)
+    event.tell('foo', [defaultCard])
+
+    expect(callback).toHaveBeenCalledWith(undefined, {
+      'expect_user_response': false,
+      'final_response': {
+        'rich_response': {
+          'items': [{'simple_response': {'text_to_speech': 'foo'}}, {
+            'basic_card': {
+              'buttons': [],
+              'formatted_text': 'cardContent',
+              'image': {'accessibility_text': 'image', 'url': 'http://large.com/foo.jpg'},
+              'subtitle': undefined,
+              'title': 'cardTitle'
+            }
+          }], 'link_out_suggestion': undefined, 'suggestions': []
+        }
+      }
+    })
+  })
+
+  xit('can tell with carousel', () => {
+    event.tell('foo', [defaultCard, defaultCard])
 
     expect(callback).toHaveBeenCalledWith(undefined, {
       'expect_user_response': false,
@@ -71,7 +92,7 @@ describe('GoogleActionEvent', () => {
   })
 
   it('can ask with card', () => {
-    event.ask('foo', null, defaultCard)
+    event.ask('foo', null, [defaultCard])
 
     expect(callback).toHaveBeenCalledWith(undefined, {
       'conversation_token': '{"state":null,"data":{}}',
@@ -90,6 +111,47 @@ describe('GoogleActionEvent', () => {
             }], 'link_out_suggestion': undefined, 'suggestions': []
           }
         }, 'possible_intents': [{'intent': 'assistant.intent.action.TEXT'}]
+      }]
+    })
+  })
+
+  it('can ask with carousel', () => {
+    event.ask('foo', null, [defaultCard, defaultCard])
+
+    expect(callback).toHaveBeenCalledWith(undefined, {
+      'conversation_token': '{"state":null,"data":{}}',
+      'expect_user_response': true,
+      'expected_inputs': [{
+        'input_prompt': {
+          'rich_initial_prompt': {
+            'items': [{'simple_response': {'text_to_speech': 'foo'}}],
+            'link_out_suggestion': undefined,
+            'suggestions': []
+          }
+        },
+        'possible_intents': [{
+          'input_value_spec': {
+            'option_value_spec': {
+              'carousel_select': {
+                'items': [
+                  {
+                    'description': 'cardContent',
+                    'image': {'accessibility_text': 'image', 'url': 'http://large.com/foo.jpg'},
+                    'option_info': {key: 'cardTitle', synonyms: []},
+                    'title': 'cardTitle'
+                  },
+                  {
+                    'description': 'cardContent',
+                    'image': {'accessibility_text': 'image', 'url': 'http://large.com/foo.jpg'},
+                    'option_info': {key: 'cardTitle', synonyms: []},
+                    'title': 'cardTitle'
+                  }
+                ]
+              }
+            }
+          },
+          'intent': 'actions.intent.OPTION'
+        }]
       }]
     })
   })
