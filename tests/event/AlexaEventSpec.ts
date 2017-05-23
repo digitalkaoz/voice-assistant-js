@@ -115,24 +115,8 @@ describe('AlexaEvent', () => {
     })
   })
 
-  it('can tell with link account card', () => {
-    event.tellWithLinkAccountCard('foo')
-
-    expect(callback).toHaveBeenCalledWith({
-      response: {
-        card: {
-          type: 'LinkAccount'
-        },
-        outputSpeech: {ssml: '<speak> foo </speak>', type: 'SSML'},
-        shouldEndSession: true
-      },
-      sessionAttributes: {},
-      version: '1.0'
-    })
-  })
-
-  it('can ask with link account card', () => {
-    event.askWithLinkAccountCard('foo')
+  it('can signin', () => {
+    event.signin('foo')
 
     expect(callback).toHaveBeenCalledWith({
       response: {
@@ -145,6 +129,21 @@ describe('AlexaEvent', () => {
       sessionAttributes: {},
       version: '1.0'
     })
+  })
+
+  it('can return the user', () => {
+    expect(event.getUser()).toEqual({
+      'userId': 'amzn1.ask.account.TOKEN'
+    })
+  })
+
+  it('can check for signin status',() => {
+    expect(event.isSignedIn()).toBeTruthy()
+
+    delete(mockEvent.session.user)
+    event = new AlexaEvent(handler(mockEvent, context, callback) as AlexaSdk)
+
+    expect(event.isSignedIn()).toBeFalsy()
   })
 
   it('can ask for form field values', () => {

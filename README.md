@@ -21,6 +21,12 @@ then you should install the client library you want.
 
 ## Usage
 
+### Implementations
+
+* alexa sdk
+* google action sdk
+* api-ai over google-action
+
 ### on aws lamda
 
 > make sure you use at least `node-6.10`

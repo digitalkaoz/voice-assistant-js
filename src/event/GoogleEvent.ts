@@ -35,31 +35,45 @@ export abstract class GoogleEvent {
     throw new Error('not implemented')
   }
 
-  public tellWithLinkAccountCard (text: string) {
-    throw new Error('not implemented')
+  public signin (text: string) {
+    // const input = this.handler.buildInputPrompt(false, text)
+
+    this.handler.askForSignIn(/*text*/)
   }
 
-  public askWithLinkAccountCard (text: string) {
-    throw new Error('not implemented')
+  public isSignedIn (): boolean {
+    return 'OK' === this.handler.getSignInStatus()
+  }
+
+  public getUser (): any {
+    return this.handler.getUser()
   }
 
   askFormField (field: string, text: string, reprompt ?: string, delegate ?: string, card ?: Card) {
-    const dialog = this.handler.getDialogState()
-
-    this.handler.ask()
     throw new Error('not implemented')
+
+    // this.handler.setContext()
+    // this.ask(text, reprompt, card)
   }
 
   confirmFormField (field: string, text: string, reprompt ?: string, delegate ?: string, card ?: Card) {
     throw new Error('not implemented')
+
+    // this.ask(text, reprompt, card)
   }
 
-  submitForm (text: string, invalidCallback: Function, unconfirmedCallback: Function, reprompt ?: string, delegate ?: string, card ?: Card) {
-    throw new Error('not implemented')
+  submitForm (text: string, invalidCallback: Function, confirmedCallback: Function, reprompt ?: string, delegate ?: string, card ?: Card) {
+    let input = text
+
+    if (card) {
+      input = this.createCard(card, text)
+    }
+
+    this.handler.askForConfirmation(input)
   }
 
   private createCard (card: Card, text) {
-    return new Responses.RichResponse()
+    return this.handler.buildRichResponse()
       .addSimpleResponse(text)
       .addBasicCard(this.handler.buildBasicCard(card.content)
         .setTitle(card.title)

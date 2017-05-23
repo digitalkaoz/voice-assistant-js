@@ -9,19 +9,30 @@ export declare interface IApi {}
 
 export declare interface IEvent {
   intent(): string
+
   delegate (intent: string)
+
   tell(text: string, card?: Card)
+
   ask(text: string, reprompt?: string, card?: Card)
-  tellWithLinkAccountCard (text: string)
-  askWithLinkAccountCard (text: string)
+
+  //tellWithLinkAccountCard (text: string)
+  signin (text: string)
+
+  isSignedIn(): boolean
+
   askFormField(field: string, text: string, reprompt?: string, delegate?: string, card?: Card)
+
   confirmFormField(field: string, text: string, reprompt?: string, delegate?: string, card?: Card)
+
   submitForm(text: string, invalidCallback: Function, unconfirmedCallback: Function, reprompt?: string, delegate?: string, card?: Card)
+
   getParameter(name: string): any
 }
 
 export declare interface IHandler {
   handle(event: IEvent, api: IApi)
+
   createSdkHandler(event: any, context: any, callback: () => any)
 }
 

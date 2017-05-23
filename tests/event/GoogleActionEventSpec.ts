@@ -107,4 +107,43 @@ describe('GoogleActionEvent', () => {
     })
   })
 
+  it('can signin', () => {
+    event.signin('foo')
+
+    expect(callback).toHaveBeenCalledWith(undefined, {
+      'conversation_token': '{"state":null,"data":{}}',
+      'expect_user_response': true,
+      'expected_inputs': [{
+        'input_prompt': {
+          'initial_prompts': [{'text_to_speech': 'PLACEHOLDER_FOR_SIGN_IN'}],
+          'no_input_prompts': []
+        }, 'possible_intents': [{'input_value_data': {}, 'intent': 'actions.intent.SIGN_IN'}]
+      }]
+    })
+  })
+
+  it('can check for signin status', () => {
+    expect(event.isSignedIn()).toBeFalsy()
+
+    mockEvent.inputs[0].arguments.push({
+      'name': 'SIGN_IN',
+      'extension': {'status': 'OK'}
+    })
+    assistant = new GoogleActionHandler().createSdkHandler(mockEvent, {}, callback)
+    event = new GoogleActionEvent(assistant)
+
+    expect(event.isSignedIn()).toBeTruthy()
+  })
+
+  it('can return the user', () => {
+    expect(event.getUser()).toEqual({
+      'accessToken': 'TOKEN',
+      'access_token': 'TOKEN',
+      'profile': {'displayName': 'John Doe', 'familyName': 'Doe', 'givenName': 'John'},
+      'userId': 'USERID',
+      'userName': {'displayName': 'John Doe', 'familyName': 'Doe', 'givenName': 'John'},
+      'user_id': 'USERID'
+    })
+  })
+
 })

@@ -29,12 +29,16 @@ export class AlexaEvent implements IEvent {
     }
   }
 
-  public tellWithLinkAccountCard (text: string) {
-    this.handler.emit(':tellWithLinkAccountCard', text)
+  public signin (text: string) {
+    this.handler.emit(':askWithLinkAccountCard', text)
   }
 
-  public askWithLinkAccountCard (text: string) {
-    this.handler.emit(':askWithLinkAccountCard', text)
+  public isSignedIn (): boolean {
+    return !!this.handler._event.session.user
+  }
+
+  public getUser (): any {
+    return this.handler._event.session.user
   }
 
   public askFormField (field: string, text: string, reprompt?: string, delegate?: string, card?: Card) {
@@ -76,6 +80,7 @@ export class AlexaEvent implements IEvent {
   }
 
   /*
-   this.emit(':tellWithPermissionCard', speechOutput, permissionArray);
+    this.handler.emit(':tellWithPermissionCard', speechOutput, permissionArray);
+    this.handler.emit(':tellWithLinkAccountCard', text)
    */
 }
