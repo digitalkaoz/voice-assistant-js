@@ -16,7 +16,7 @@ export declare interface IEvent {
 
   ask(text: string, reprompt?: string, card?: Card)
 
-  //tellWithLinkAccountCard (text: string)
+  // tellWithLinkAccountCard (text: string)
   signin (text: string)
 
   isSignedIn(): boolean
